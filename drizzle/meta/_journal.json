@@ -15,6 +15,20 @@
       "when": 1765226332316,
       "tag": "0001_needy_tyrannus",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1765458403999,
+      "tag": "0002_friendly_microchip",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1765458603086,
+      "tag": "0003_even_nick_fury",
+      "breakpoints": true
     }
   ]
 }

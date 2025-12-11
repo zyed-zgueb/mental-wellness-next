@@ -1,0 +1,108 @@
+{
+  "common": {
+    "appName": "MindWell",
+    "loading": "Loading...",
+    "skipToContent": "Skip to main content"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "tracking": "Tracking",
+    "goals": "Goals",
+    "analytics": "Analytics",
+    "chat": "AI Chat",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "auth": {
+    "loading": "Loading...",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "yourProfile": "Your Profile",
+    "logOut": "Log out",
+    "restrictedAccess": "Restricted access",
+    "mustSignIn": "You must sign in to access your dashboard"
+  },
+  "home": {
+    "hero": {
+      "title": "Take care of your mental health",
+      "description": "Track your well-being, set personalized goals, and receive support with the help of artificial intelligence",
+      "cta": {
+        "start": "Get started for free",
+        "learnMore": "Learn more"
+      }
+    },
+    "features": {
+      "title": "A comprehensive approach to your well-being",
+      "dailyTracking": {
+        "title": "Daily tracking",
+        "description": "Record your mood, symptoms, and activities to better understand your patterns"
+      },
+      "aiAssistant": {
+        "title": "Personal AI assistant",
+        "description": "Create personalized goals and receive support tailored to your needs"
+      },
+      "analytics": {
+        "title": "Analytics & Insights",
+        "description": "Visualize your progress with charts and receive personalized reports"
+      }
+    },
+    "cta": {
+      "title": "Start your journey today",
+      "description": "Join thousands of people who take care of their mental health every day",
+      "button": "Create my free account"
+    }
+  },
+  "dashboard": {
+    "greeting": "Hello {name} 👋",
+    "currentStreak": "Current streak",
+    "averageMood": "Average mood",
+    "totalEntries": "Total entries",
+    "bestStreak": "Best streak",
+    "days": "days",
+    "quickMoodCheck": "Quick mood check",
+    "howFeeling": "How are you feeling today?",
+    "saveMood": "Save",
+    "moodTrend": "Mood trend (last 7 days)",
+    "moodLabel": "Mood",
+    "activeGoals": "Active goals",
+    "progress": "Progress",
+    "recentJournal": "Recent journal",
+    "aiInsight": "AI Insight",
+    "aiMessage": "Keep up the great work! Your mood is improving consistently. 🌟",
+    "quickActions": "Quick actions",
+    "newJournal": "New journal",
+    "openChat": "AI Chat",
+    "viewStats": "View stats"
+  },
+  "footer": {
+    "tagline": "Your companion for a flourishing mental wellbeing.",
+    "resources": "Resources",
+    "helpCenter": "Help Center",
+    "about": "About",
+    "blog": "Blog",
+    "legal": "Legal",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "disclaimer": "Disclaimer",
+    "cookies": "Cookies",
+    "support": "Support",
+    "contact": "Contact",
+    "email": "support@mindwell.app",
+    "copyright": "© {year} MindWell. All rights reserved.",
+    "medicalDisclaimer": "⚠️ This tool does not replace professional medical advice."
+  },
+  "metadata": {
+    "dashboard": {
+      "title": "Dashboard",
+      "description": "Your mental health tracking dashboard"
+    },
+    "chat": {
+      "title": "AI Chat",
+      "description": "Talk with your wellbeing assistant"
+    },
+    "profile": {
+      "title": "Profile",
+      "description": "Manage your profile and preferences"
+    }
+  }
+}

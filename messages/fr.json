@@ -1,0 +1,108 @@
+{
+  "common": {
+    "appName": "MindWell",
+    "loading": "Chargement...",
+    "skipToContent": "Passer au contenu principal"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "tracking": "Suivi",
+    "goals": "Objectifs",
+    "analytics": "Analytics",
+    "chat": "Chat IA",
+    "profile": "Profil",
+    "settings": "Paramètres"
+  },
+  "auth": {
+    "loading": "Loading...",
+    "signIn": "Se connecter",
+    "signOut": "Déconnexion",
+    "yourProfile": "Votre profil",
+    "logOut": "Se déconnecter",
+    "restrictedAccess": "Accès restreint",
+    "mustSignIn": "Vous devez vous connecter pour accéder à votre tableau de bord"
+  },
+  "home": {
+    "hero": {
+      "title": "Prenez soin de votre santé mentale",
+      "description": "Suivez votre bien-être, fixez des objectifs personnalisés et recevez du soutien avec l'aide de l'intelligence artificielle",
+      "cta": {
+        "start": "Commencer gratuitement",
+        "learnMore": "En savoir plus"
+      }
+    },
+    "features": {
+      "title": "Une approche complète de votre bien-être",
+      "dailyTracking": {
+        "title": "Suivi quotidien",
+        "description": "Enregistrez votre humeur, vos symptômes et vos activités pour mieux comprendre vos patterns"
+      },
+      "aiAssistant": {
+        "title": "Assistant IA personnel",
+        "description": "Créez des objectifs personnalisés et recevez du support adapté à vos besoins"
+      },
+      "analytics": {
+        "title": "Analyses & Insights",
+        "description": "Visualisez vos progrès avec des graphiques et recevez des rapports personnalisés"
+      }
+    },
+    "cta": {
+      "title": "Commencez votre parcours aujourd'hui",
+      "description": "Rejoignez des milliers de personnes qui prennent soin de leur santé mentale chaque jour",
+      "button": "Créer mon compte gratuitement"
+    }
+  },
+  "dashboard": {
+    "greeting": "Bonjour {name} 👋",
+    "currentStreak": "Série actuelle",
+    "averageMood": "Humeur moyenne",
+    "totalEntries": "Entrées totales",
+    "bestStreak": "Record de série",
+    "days": "jours",
+    "quickMoodCheck": "Check rapide d'humeur",
+    "howFeeling": "Comment vous sentez-vous aujourd'hui ?",
+    "saveMood": "Enregistrer",
+    "moodTrend": "Tendance humeur (7 derniers jours)",
+    "moodLabel": "Humeur",
+    "activeGoals": "Objectifs actifs",
+    "progress": "Progrès",
+    "recentJournal": "Journal récent",
+    "aiInsight": "Insight IA",
+    "aiMessage": "Continuez sur cette lancée ! Votre humeur s'améliore constamment. 🌟",
+    "quickActions": "Actions rapides",
+    "newJournal": "Nouveau journal",
+    "openChat": "Chat IA",
+    "viewStats": "Voir stats"
+  },
+  "footer": {
+    "tagline": "Votre compagnon pour un bien-être mental épanoui.",
+    "resources": "Ressources",
+    "helpCenter": "Centre d'aide",
+    "about": "À propos",
+    "blog": "Blog",
+    "legal": "Légal",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "disclaimer": "Disclaimer",
+    "cookies": "Cookies",
+    "support": "Support",
+    "contact": "Contact",
+    "email": "support@mindwell.app",
+    "copyright": "© {year} MindWell. Tous droits réservés.",
+    "medicalDisclaimer": "⚠️ Cet outil ne remplace pas un avis médical professionnel."
+  },
+  "metadata": {
+    "dashboard": {
+      "title": "Dashboard",
+      "description": "Votre tableau de bord de suivi de santé mentale"
+    },
+    "chat": {
+      "title": "Chat IA",
+      "description": "Parlez avec votre assistant bien-être"
+    },
+    "profile": {
+      "title": "Profil",
+      "description": "Gérez votre profil et vos préférences"
+    }
+  }
+}
