@@ -91,6 +91,13 @@
     "copyright": "© {year} MindWell. All rights reserved.",
     "medicalDisclaimer": "⚠️ This tool does not replace professional medical advice."
   },
+  "cookieConsent": {
+    "title": "We use cookies",
+    "description": "We use essential cookies for site operation and optional cookies to improve your experience.",
+    "learnMore": "Learn more",
+    "acceptAll": "Accept all",
+    "acceptEssential": "Essential only"
+  },
   "metadata": {
     "dashboard": {
       "title": "Dashboard",
@@ -103,6 +110,356 @@
     "profile": {
       "title": "Profile",
       "description": "Manage your profile and preferences"
+    }
+  },
+  "legal": {
+    "privacy": {
+      "meta": {
+        "title": "Privacy Policy | MindWell",
+        "description": "How we collect, use, and protect your personal data"
+      },
+      "title": "Privacy Policy",
+      "subtitle": "How we collect, use, and protect your data",
+      "lastUpdated": "Last updated",
+      "introduction": {
+        "title": "Introduction",
+        "content": "At MindWell, we take the protection of your personal data very seriously. This privacy policy explains what information we collect, how we use it, and your rights regarding your data."
+      },
+      "dataCollection": {
+        "title": "Data we collect",
+        "intro": "We collect the following types of data:",
+        "items": {
+          "account": {
+            "title": "Account information",
+            "description": "Name, email, profile picture (via Google OAuth)"
+          },
+          "health": {
+            "title": "Mental health data",
+            "description": "Mood, symptoms, journal, goals, activities that you voluntarily enter"
+          },
+          "usage": {
+            "title": "Usage data",
+            "description": "Pages visited, features used, interactions with AI"
+          },
+          "technical": {
+            "title": "Technical data",
+            "description": "IP address, browser type, operating system"
+          }
+        }
+      },
+      "dataUsage": {
+        "title": "How we use your data",
+        "intro": "Your data is used to:",
+        "items": {
+          "service": "Provide and improve our services",
+          "personalization": "Personalize your experience and AI insights",
+          "communication": "Send you important notifications and communications",
+          "improvement": "Analyze usage to improve the application",
+          "security": "Detect and prevent fraud and abuse"
+        }
+      },
+      "dataSharing": {
+        "title": "Data sharing",
+        "content": "We never sell your data. We share your data only in the following cases:",
+        "items": {
+          "providers": {
+            "title": "Service providers",
+            "description": "Hosting services, analytics, AI (OpenRouter)"
+          },
+          "legal": {
+            "title": "Legal obligations",
+            "description": "If required by law or to protect our rights"
+          },
+          "consent": {
+            "title": "With your consent",
+            "description": "In any other case, only with your explicit authorization"
+          }
+        }
+      },
+      "dataSecurity": {
+        "title": "Data security",
+        "content": "We implement technical and organizational security measures to protect your data: encryption in transit (HTTPS), encryption at rest for sensitive data, strict access controls, regular security audits."
+      },
+      "yourRights": {
+        "title": "Your rights (GDPR)",
+        "intro": "You have the following rights regarding your data:",
+        "items": {
+          "access": {
+            "title": "Right of access",
+            "description": "Request a copy of your data"
+          },
+          "correction": {
+            "title": "Right of rectification",
+            "description": "Correct your inaccurate data"
+          },
+          "deletion": {
+            "title": "Right to erasure",
+            "description": "Delete your account and all your data"
+          },
+          "portability": {
+            "title": "Right to portability",
+            "description": "Export your data in a standard format"
+          },
+          "objection": {
+            "title": "Right to object",
+            "description": "Object to certain data processing"
+          }
+        }
+      },
+      "cookies": {
+        "title": "Cookies",
+        "content": "We use essential cookies for site operation, functional cookies for your preferences, and analytics cookies (with your consent). See our Cookie Policy for more details."
+      },
+      "changes": {
+        "title": "Changes to this policy",
+        "content": "We may modify this policy from time to time. We will notify you of any significant changes by email or via the application."
+      },
+      "contact": {
+        "title": "Contact us",
+        "content": "For any questions about this policy or to exercise your rights, contact us at:",
+        "address": "Address"
+      }
+    },
+    "terms": {
+      "meta": {
+        "title": "Terms of Service | MindWell",
+        "description": "The terms governing the use of MindWell"
+      },
+      "title": "Terms of Service",
+      "subtitle": "The terms governing your use of MindWell",
+      "lastUpdated": "Last updated",
+      "acceptance": {
+        "title": "Acceptance of terms",
+        "content": "By accessing and using MindWell, you agree to be bound by these terms of service. If you do not accept these terms, please do not use our service."
+      },
+      "description": {
+        "title": "Service description",
+        "content": "MindWell is a mental health and wellness tracking application that offers mood tracking, journaling, goal setting, and artificial intelligence assistance tools. Our service is designed as a wellness tool and does not constitute a medical or therapeutic service."
+      },
+      "account": {
+        "title": "User accounts",
+        "intro": "To use MindWell, you must:",
+        "items": {
+          "accuracy": "Provide accurate and complete information during registration",
+          "security": "Maintain the security of your account and password",
+          "responsibility": "Be responsible for all activity on your account",
+          "notification": "Notify us immediately of any unauthorized use"
+        }
+      },
+      "userContent": {
+        "title": "User content",
+        "intro": "Regarding the content you create on MindWell:",
+        "items": {
+          "ownership": "You retain ownership of all content you create",
+          "license": "You grant us a license to host and process your content to provide the service",
+          "responsibility": "You are responsible for your content and must comply with applicable laws"
+        }
+      },
+      "prohibitedUse": {
+        "title": "Prohibited uses",
+        "intro": "You agree not to:",
+        "items": {
+          "illegal": "Use the service for illegal or unauthorized purposes",
+          "harmful": "Post offensive, defamatory, or harmful content",
+          "spam": "Send spam or unsolicited commercial content",
+          "interference": "Interfere with the operation of the service",
+          "impersonation": "Impersonate another person",
+          "automation": "Use automated bots or scripts without authorization"
+        }
+      },
+      "intellectualProperty": {
+        "title": "Intellectual property",
+        "content": "MindWell and its original content (text, graphics, logos, code) are the property of MindWell and are protected by intellectual property laws. You may not copy, modify, or distribute our content without permission."
+      },
+      "termination": {
+        "title": "Termination",
+        "content": "We reserve the right to suspend or terminate your account at any time for violation of these terms. You can also close your account at any time from your settings."
+      },
+      "disclaimers": {
+        "title": "Disclaimers",
+        "content": "THE SERVICE IS PROVIDED \"AS IS\" WITHOUT WARRANTY OF ANY KIND. WE DO NOT GUARANTEE THAT THE SERVICE WILL BE UNINTERRUPTED OR ERROR-FREE."
+      },
+      "limitation": {
+        "title": "Limitation of liability",
+        "content": "MindWell will not be liable for indirect, incidental, or consequential damages arising from the use or inability to use the service."
+      },
+      "modifications": {
+        "title": "Modifications to terms",
+        "content": "We may modify these terms at any time. Modifications will take effect upon publication. Your continued use of the service after modifications constitutes your acceptance of the new terms."
+      },
+      "governingLaw": {
+        "title": "Governing law",
+        "content": "These terms are governed by French and European laws. Any dispute will be submitted to the competent courts of France."
+      },
+      "contact": {
+        "title": "Contact",
+        "content": "For any questions about these terms, contact us at:"
+      }
+    },
+    "disclaimer": {
+      "meta": {
+        "title": "Mental Health Disclaimer | MindWell",
+        "description": "Important information about using MindWell and service limitations"
+      },
+      "title": "Mental Health Disclaimer",
+      "subtitle": "Important information regarding the use of MindWell",
+      "lastUpdated": "Last updated",
+      "alert": {
+        "title": "Important Warning",
+        "description": "MindWell is NOT a medical service. In case of emergency, immediately contact emergency services or a crisis line."
+      },
+      "notMedicalAdvice": {
+        "title": "Not medical advice",
+        "content": "MindWell is a wellness and personal tracking tool. Nothing in this application constitutes medical, psychological, or psychiatric advice, diagnosis, or treatment. Information and insights provided by AI are for informational purposes only and should not be considered professional medical advice."
+      },
+      "noSubstitute": {
+        "title": "Not a substitute for professional help",
+        "content": "MindWell does not in any way replace consultation with a qualified mental health professional (psychologist, psychiatrist, therapist). If you suffer from mental health problems, always consult a healthcare professional."
+      },
+      "aiLimitations": {
+        "title": "Artificial intelligence limitations",
+        "intro": "Our AI assistant has important limitations:",
+        "items": {
+          "notTherapist": "AI is not a therapist and cannot provide therapy",
+          "noEmergency": "AI cannot handle emergencies or crises",
+          "limitations": "AI may make mistakes or provide inaccurate information",
+          "noGuarantee": "AI suggestions do not guarantee therapeutic results"
+        }
+      },
+      "emergencyResources": {
+        "title": "Emergency resources",
+        "intro": "If you are in distress or have suicidal thoughts, contact immediately:",
+        "crisis": {
+          "title": "Crisis lines",
+          "france": "France",
+          "international": "International",
+          "emergency": "Immediate emergency",
+          "emergencyText": "Call 15 (SAMU) or go to the nearest emergency room"
+        }
+      },
+      "seekProfessional": {
+        "title": "When to seek professional help",
+        "intro": "You should consult a mental health professional if:",
+        "items": {
+          "persistent": "You experience persistent emotional distress",
+          "severe": "Your symptoms interfere with your daily life",
+          "harm": "You have thoughts of self-harm or suicide",
+          "interference": "You have difficulty functioning at work or in relationships",
+          "trauma": "You have experienced recent trauma"
+        }
+      },
+      "userResponsibility": {
+        "title": "User responsibility",
+        "content": "By using MindWell, you acknowledge and accept that you are solely responsible for your decisions regarding your mental health. MindWell provides tracking and reflection tools, but decisions about your treatment should be made in consultation with qualified healthcare professionals."
+      },
+      "dataAccuracy": {
+        "title": "Data accuracy",
+        "content": "Insights, trends, and analyses provided by MindWell are based on the data you enter. Their accuracy and usefulness depend on the quality and regularity of your entries. These analyses are personal reflection tools and not medical diagnoses."
+      },
+      "noLiability": {
+        "title": "Limitation of liability",
+        "content": "MindWell and its creators cannot be held responsible for any decision made based on information or suggestions provided by the application. Always consult a healthcare professional before making important decisions about your mental health."
+      },
+      "modifications": {
+        "title": "Modifications",
+        "content": "We reserve the right to modify this disclaimer at any time. Modifications will be effective upon publication on this page."
+      },
+      "contact": {
+        "title": "Contact",
+        "content": "For any questions about this disclaimer, contact us at:"
+      }
+    },
+    "cookies": {
+      "meta": {
+        "title": "Cookie Policy | MindWell",
+        "description": "How we use cookies and similar technologies"
+      },
+      "title": "Cookie Policy",
+      "subtitle": "How we use cookies and similar technologies",
+      "lastUpdated": "Last updated",
+      "whatAreCookies": {
+        "title": "What is a cookie?",
+        "content": "Cookies are small text files stored on your device when you visit a website. They help us make our site work, improve your experience, and understand how you use our service."
+      },
+      "howWeUse": {
+        "title": "How we use cookies",
+        "intro": "We use cookies for various reasons detailed below."
+      },
+      "types": {
+        "title": "Types of cookies we use",
+        "essential": {
+          "title": "Essential cookies (required)",
+          "description": "These cookies are necessary for the site to function and cannot be disabled:",
+          "items": {
+            "authentication": "Authentication cookies to maintain your session",
+            "security": "Security cookies to prevent attacks",
+            "language": "Language preference cookies"
+          }
+        },
+        "functional": {
+          "title": "Functional cookies (optional)",
+          "description": "These cookies enhance your experience by remembering your choices:",
+          "items": {
+            "preferences": "User preferences (theme, notifications)",
+            "theme": "Dark/light mode",
+            "consent": "Your cookie consent choices"
+          }
+        },
+        "analytics": {
+          "title": "Analytics cookies (optional)",
+          "description": "These cookies help us understand how you use the site:",
+          "items": {
+            "usage": "Pages visited and features used",
+            "performance": "Loading times and performance",
+            "errors": "Errors encountered"
+          }
+        }
+      },
+      "thirdParty": {
+        "title": "Third-party cookies",
+        "intro": "We use certain third-party services that may place cookies:",
+        "items": {
+          "auth": {
+            "title": "Google OAuth",
+            "description": "For authentication (required if you use Google Sign-In)"
+          },
+          "analytics": {
+            "title": "Analytics services",
+            "description": "To measure usage (optional, with your consent)"
+          }
+        }
+      },
+      "control": {
+        "title": "Control cookies",
+        "intro": "You can control and manage cookies in several ways:",
+        "items": {
+          "settings": {
+            "title": "Application settings",
+            "description": "Manage your cookie preferences in your settings"
+          },
+          "browser": {
+            "title": "Browser settings",
+            "description": "Configure your browser to block or delete cookies"
+          },
+          "optOut": {
+            "title": "Analytics opt-out",
+            "description": "Disable analytics cookies in your preferences"
+          }
+        },
+        "note": "Note that blocking certain cookies may affect site functionality."
+      },
+      "retention": {
+        "title": "Retention period",
+        "content": "Session cookies are deleted when you close your browser. Persistent cookies are kept according to their specific duration (typically 30 days to 1 year)."
+      },
+      "updates": {
+        "title": "Updates to this policy",
+        "content": "We may update this cookie policy occasionally. We will inform you of any significant changes."
+      },
+      "contact": {
+        "title": "Contact",
+        "content": "For questions about our use of cookies, contact us at:"
+      }
     }
   }
 }

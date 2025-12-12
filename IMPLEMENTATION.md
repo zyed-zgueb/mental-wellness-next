@@ -1,7 +1,7 @@
 # Plan d'Implémentation - Application de Suivi de Santé Mentale
 **Ce fichier doit-être mis à jour en fonction du status de chaque tâche**
 **Une phase est marquée terminée quand toutes les tâches de la phase sont réalisées**
-**Dernière mise à jour** : 2025-12-11 (Phase 1 terminée)
+**Dernière mise à jour** : 2025-12-12 (Phase 2 terminée)
 
 ---
 
@@ -9,7 +9,7 @@
 
 - **Phase 0** : Nettoyage du Boilerplate → 🟢 Terminé
 - **Phase 1** : Design System + Dashboard Minimal → 🟢 Terminé
-- **Phase 2** : i18n + Pages Légales + SEO → 🟡 En cours
+- **Phase 2** : i18n + Pages Légales + SEO → 🟢 Terminé
 - **Phase 3** : Pages de Tracking (Mood, Journal, etc.) → ⚪ Pas commencé
 - **Phase 4** : Visualisations & Analytics UI → ⚪ Pas commencé
 - **Phase 5** : Chat IA & Objectifs UI → ⚪ Pas commencé
@@ -61,11 +61,13 @@
 - [x] Créer palette de couleurs chaleureuses (définir dans `globals.css`)
   - [x] Couleurs primaires vives mais douces (corail, lavande, vert menthe)
   - [x] Couleurs d'humeur (excellent=vert vif, bon=vert clair, neutre=jaune, bas=orange, très bas=rouge doux)
-- [x] Installer composants shadcn/ui nécessaires :
+- [x] Installer composants shadcn/ui nécessaires (27 composants installés) :
   - [x] `tabs`, `select`, `calendar`, `progress`, `slider`
   - [x] `switch`, `checkbox`, `radio-group`
-  - [x] `tooltip`, `popover`, `alert`
-  - [x] `chart` (recharts)
+  - [x] `tooltip`, `popover`, `alert`, `dialog`
+  - [x] `chart` (recharts), `card`, `button`, `badge`, `separator`
+  - [x] `avatar`, `dropdown-menu`, `input`, `label`, `textarea`
+  - [x] `skeleton`, `sonner`, `spinner`
 - [x] Créer composants de base personnalisés :
   - [x] `EmotionIcon` (composant avec icônes émojis/lucide pour émotions)
   - [x] `MoodScale` (slider 1-10 avec gradient de couleurs)
@@ -75,36 +77,45 @@
 - [x] Configurer animations Framer Motion (installé)
 
 ### 1.2 Dashboard principal avec mock data (PRIORITÉ 1) ✅
-- [x] Créer `/app/dashboard/page.tsx` (remplacer version basique existante)
+- [x] Créer `/app/[locale]/dashboard/page.tsx` (avec support i18n)
 - [x] Créer fichier mock data : `/lib/mock-data.ts`
   - [x] Données mood des 30 derniers jours
   - [x] 3-5 objectifs en cours avec progrès
   - [x] Dernières entrées journal (3-5)
   - [x] Stats rapides (streak, moyenne humeur, tendance)
 - [x] Implémenter sections du dashboard :
-  - [x] **Header** : "Bonjour [Prénom]" + date + mood actuel
-  - [x] **Quick Mood Check** : Widget pour saisie rapide humeur du jour
-  - [x] **Mood Trend** : Graphique en ligne des 7 derniers jours (recharts)
+  - [x] **Header** : "Bonjour [Prénom]" + date du jour avec locale
+  - [x] **Stats Overview** : 4 StatCards (streak, average mood, total entries, best streak)
+  - [x] **Quick Mood Check** : Widget avec MoodScale pour saisie rapide humeur du jour
+  - [x] **Mood Trend** : Graphique en ligne des 7 derniers jours (recharts LineChart)
   - [x] **Active Goals** : 3 cartes d'objectifs avec progress bars
-  - [x] **Recent Journal** : 2-3 dernières entrées en aperçu
-  - [x] **AI Insight** : Card avec un message de l'IA
-  - [x] **Quick Actions** : Boutons rapides (Nouveau journal, Chat IA, Voir stats)
+  - [x] **Recent Journal** : 3 dernières entrées avec tags et dates
+  - [x] **AI Insight** : Card avec gradient et message de l'IA
+  - [x] **Quick Actions** : 3 boutons rapides (Nouveau journal, Chat IA, Analytics)
 - [x] Optimiser SEO : metadata dashboard page
-- [x] Responsive design (mobile-first)
+- [x] Responsive design (mobile-first avec grid layout)
+- [x] Protection par authentification (redirect si non connecté)
+- [x] Internationalisation complète (FR/EN)
 
 ### 1.3 Navigation et header personnalisés ✅
 - [x] Remplacer complètement `/components/site-header.tsx` avec navigation pour l'app de santé mentale
-- [x] Ajouter liens : Dashboard, Suivi, Objectifs, Analytics, Chat IA
-- [x] Intégrer UserProfile existant mais stylé avec le nouveau design
-- [x] Remplacer `/components/site-footer.tsx` avec footer approprié (liens légaux, réseaux sociaux)
+- [x] Ajouter liens avec icônes : Dashboard, Tracking, Goals, Analytics, Chat AI
+- [x] Intégrer UserProfile, LanguageSwitcher et ModeToggle dans header
+- [x] Logo avec icône Heart et gradient text "MindWell"
+- [x] Navigation responsive (cachée sur mobile, visible sur desktop)
+- [x] Accessibilité : skip to content link, ARIA labels, semantic HTML
+- [x] Remplacer `/components/site-footer.tsx` avec footer approprié
+- [x] Footer avec 4 colonnes : Brand, Resources, Legal, Support
+- [x] Liens footer vers pages légales (Privacy, Terms, Disclaimer, Cookies)
+- [x] Copyright dynamique et disclaimer médical
 
 ---
 
-## Phase 2 : i18n + Pages Légales + SEO 🟡
+## Phase 2 : i18n + Pages Légales + SEO 🟢
 
 **Objectif** : Internationalisation et conformité légale de base.
 
-**Statut** : 🟡 En cours - Phase 2.1 (terminée le 2025-12-11)
+**Statut** : ✅ Phase terminée - 2025-12-12
 
 ### 2.1 Internationalisation (i18n) ✅ - Terminé 2025-12-11
 - [x] Installer et configurer `next-intl` pour gestion multilingue
@@ -116,15 +127,15 @@
 - [x] Créer configuration i18n (`src/i18n/routing.ts`, `src/i18n/request.ts`)
 - [x] Mettre à jour `next.config.ts` avec plugin next-intl
 
-### 2.2 Pages légales & SEO
-- [ ] Créer `/app/legal/privacy/page.tsx` - Politique de confidentialité (FR/EN)
-- [ ] Créer `/app/legal/terms/page.tsx` - Conditions d'utilisation (FR/EN)
-- [ ] Créer `/app/legal/disclaimer/page.tsx` - Disclaimer santé mentale (FR/EN)
-- [ ] Créer `/app/legal/cookies/page.tsx` - Politique cookies RGPD (FR/EN)
-- [ ] Implémenter bandeau consentement cookies (shadcn Dialog)
-- [ ] Optimiser métadonnées SEO pour toutes les pages (title, description, OG tags)
-- [ ] Ajouter JSON-LD structured data pour SEO santé/bien-être
-- [ ] Créer sitemap.xml et robots.txt optimisés
+### 2.2 Pages légales & SEO ✅ - Terminé 2025-12-12
+- [x] Créer `/app/[locale]/legal/privacy/page.tsx` - Politique de confidentialité (FR/EN)
+- [x] Créer `/app/[locale]/legal/terms/page.tsx` - Conditions d'utilisation (FR/EN)
+- [x] Créer `/app/[locale]/legal/disclaimer/page.tsx` - Disclaimer santé mentale (FR/EN)
+- [x] Créer `/app/[locale]/legal/cookies/page.tsx` - Politique cookies RGPD (FR/EN)
+- [x] Implémenter bandeau consentement cookies (composant CookieConsent)
+- [x] Optimiser métadonnées SEO pour toutes les pages (title, description, OG tags)
+- [x] Ajouter JSON-LD structured data pour SEO santé/bien-être (WebApplication schema)
+- [x] Créer sitemap.xml et robots.txt optimisés (support multilingue)
 
 ---
 
@@ -423,22 +434,40 @@ pnpm add @sentry/nextjs
 ## 🎯 Priorités actuelles
 
 **Terminé** :
-- Phase 0 - Nettoyage du boilerplate ✅
-- Phase 1 - Design System + Dashboard Minimal ✅
+- Phase 0 - Nettoyage du boilerplate ✅ (2025-12-11)
+- Phase 1 - Design System + Dashboard Minimal ✅ (2025-12-11)
+- Phase 2 - i18n + Pages Légales + SEO ✅ (2025-12-12)
+  - Phase 2.1 - Internationalisation (i18n) ✅ (2025-12-11)
+  - Phase 2.2 - Pages Légales + SEO ✅ (2025-12-12)
 
-**Prochaine étape** : Phase 2 - i18n + Pages Légales + SEO
+**En cours** :
+- Aucune
+
+**Prochaine étape** : Phase 3 - Pages de Tracking (Mood, Journal, Symptoms, Activities)
 
 ---
 
 ## 📝 Notes de développement
 
 - **⚠️ CRITIQUE** : Remplacer COMPLÈTEMENT le contenu boilerplate (pas d'approche hybride)
-- **Design** : Couleurs chaleureuses (corail, lavande, vert menthe)
+- **Design** : Couleurs chaleureuses (corail, lavande, vert menthe) ✅ Implémenté
 - **Approche** : Nettoyage d'abord (Phase 0), puis UI avec mock data (Phases 1-5), puis backend (Phase 6+)
 - **SEO** : Optimiser metadata sur chaque page créée
 - **Pas de tests** : Focus sur implémentation pour validation UX
-- **shadcn/ui** : Utiliser uniquement les composants shadcn
+- **shadcn/ui** : Utiliser uniquement les composants shadcn ✅ 27 composants installés
 - **IA** : Utiliser OpenRouter (pas OpenAI direct) avec env var `OPENROUTER_MODEL`
+
+### État actuel du code (2025-12-12)
+- **Structure** : App restructurée avec `[locale]` pour support multilingue
+- **Pages créées** : Home (landing), Dashboard (complet), Profile (basique), Chat (placeholder)
+- **Pages légales** : Privacy, Terms, Disclaimer, Cookies (FR/EN avec SEO optimisé)
+- **Composants custom** : EmotionIcon, MoodScale, StatCard, PageHeader, LanguageSwitcher, CookieConsent
+- **Navigation** : SiteHeader avec navigation complète + SiteFooter avec liens légaux
+- **Mock data** : `/lib/mock-data.ts` avec données pour mood, goals, journal, stats
+- **i18n** : Français et Anglais complètement implémentés (messages/fr.json, messages/en.json)
+- **Thème** : Dark mode supporté avec next-themes
+- **SEO** : JSON-LD structured data, sitemap.xml multilingue, robots.txt optimisé
+- **Conformité** : Bandeau de consentement cookies (RGPD), pages légales complètes
 
 ---
 

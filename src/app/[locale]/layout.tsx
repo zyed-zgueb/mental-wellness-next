@@ -3,6 +3,7 @@ import "../globals.css";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { CookieConsent } from "@/components/cookie-consent";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -73,6 +74,26 @@ const jsonLd = {
     price: "0",
     priceCurrency: "USD",
   },
+  featureList: [
+    "Mood tracking",
+    "Mental health journaling",
+    "Goal setting and tracking",
+    "AI-powered wellness insights",
+    "Mental wellness analytics",
+    "Daily emotional check-ins"
+  ],
+  audience: {
+    "@type": "PeopleAudience",
+    audienceType: "People interested in mental health and wellness"
+  },
+  availableLanguage: ["French", "English"],
+  inLanguage: ["fr", "en"],
+  creator: {
+    "@type": "Organization",
+    name: "MindWell"
+  },
+  isAccessibleForFree: true,
+  sameAs: []
 };
 
 export default async function LocaleLayout({
@@ -116,6 +137,7 @@ export default async function LocaleLayout({
               <main id="main-content">{children}</main>
               <SiteFooter />
               <Toaster richColors position="top-right" />
+              <CookieConsent />
             </ThemeProvider>
           </NextIntlClientProvider>
         </LocaleProvider>
