@@ -110,6 +110,66 @@
     "profile": {
       "title": "Profile",
       "description": "Manage your profile and preferences"
+    },
+    "trackMood": {
+      "title": "Mood Tracking",
+      "description": "Record your daily mood and emotions"
+    }
+  },
+  "tracking": {
+    "mood": {
+      "title": "Mood Tracking",
+      "description": "How are you feeling right now?",
+      "quickEntry": "Quick entry",
+      "periodMode": "Period mode",
+      "form": {
+        "date": "Date",
+        "time": "Time",
+        "dateRange": "Period",
+        "startDate": "Start date",
+        "endDate": "End date",
+        "moodLevel": "Mood level",
+        "selectEmotions": "Select your emotions",
+        "emotionsHelper": "Select one or more emotions",
+        "addNote": "Add a note (optional)",
+        "notePlaceholder": "Describe how you feel, what happened today...",
+        "save": "Save",
+        "saving": "Saving...",
+        "cancel": "Cancel"
+      },
+      "emotions": {
+        "joy": "Joy",
+        "calm": "Calm",
+        "energy": "Energy",
+        "anxiety": "Anxiety",
+        "sadness": "Sadness",
+        "anger": "Anger",
+        "neutral": "Neutral"
+      },
+      "recentEntries": {
+        "title": "Recent entries",
+        "noEntries": "No recent entries",
+        "mood": "Mood",
+        "emotions": "Emotions",
+        "note": "Note"
+      },
+      "success": {
+        "title": "Mood saved!",
+        "message": "Your mood has been saved successfully.",
+        "messagePeriod": "Your average mood for the period has been saved."
+      },
+      "moodLabels": {
+        "1": "Very low",
+        "2": "Low",
+        "3": "Slightly low",
+        "4": "Below average",
+        "5": "Average",
+        "6": "Above average",
+        "7": "Good",
+        "8": "Very good",
+        "9": "Excellent",
+        "10": "Exceptional"
+      }
     }
   },
   "legal": {

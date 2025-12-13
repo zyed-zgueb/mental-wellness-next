@@ -110,6 +110,66 @@
     "profile": {
       "title": "Profil",
       "description": "Gérez votre profil et vos préférences"
+    },
+    "trackMood": {
+      "title": "Suivi d'humeur",
+      "description": "Enregistrez votre humeur et vos émotions quotidiennes"
+    }
+  },
+  "tracking": {
+    "mood": {
+      "title": "Suivi d'humeur",
+      "description": "Comment vous sentez-vous en ce moment ?",
+      "quickEntry": "Saisie rapide",
+      "periodMode": "Mode période",
+      "form": {
+        "date": "Date",
+        "time": "Heure",
+        "dateRange": "Période",
+        "startDate": "Date de début",
+        "endDate": "Date de fin",
+        "moodLevel": "Niveau d'humeur",
+        "selectEmotions": "Sélectionnez vos émotions",
+        "emotionsHelper": "Sélectionnez une ou plusieurs émotions",
+        "addNote": "Ajouter une note (optionnel)",
+        "notePlaceholder": "Décrivez comment vous vous sentez, ce qui s'est passé aujourd'hui...",
+        "save": "Enregistrer",
+        "saving": "Enregistrement...",
+        "cancel": "Annuler"
+      },
+      "emotions": {
+        "joy": "Joie",
+        "calm": "Calme",
+        "energy": "Énergie",
+        "anxiety": "Anxiété",
+        "sadness": "Tristesse",
+        "anger": "Colère",
+        "neutral": "Neutre"
+      },
+      "recentEntries": {
+        "title": "Dernières saisies",
+        "noEntries": "Aucune saisie récente",
+        "mood": "Humeur",
+        "emotions": "Émotions",
+        "note": "Note"
+      },
+      "success": {
+        "title": "Humeur enregistrée !",
+        "message": "Votre humeur a été enregistrée avec succès.",
+        "messagePeriod": "Votre humeur moyenne pour la période a été enregistrée."
+      },
+      "moodLabels": {
+        "1": "Très bas",
+        "2": "Bas",
+        "3": "Un peu bas",
+        "4": "Moyen-",
+        "5": "Moyen",
+        "6": "Moyen+",
+        "7": "Bon",
+        "8": "Très bon",
+        "9": "Excellent",
+        "10": "Exceptionnel"
+      }
     }
   },
   "legal": {

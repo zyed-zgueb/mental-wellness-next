@@ -45,43 +45,59 @@ export interface Stats {
   totalEntries: number;
 }
 
-// Generate mood data for the last 30 days
+// Generate stable mood data for the last 30 days (no random values to avoid hydration issues)
 function generateMoodData(): MoodEntry[] {
   const moods: MoodEntry[] = [];
-  const today = new Date();
-  const emotions: EmotionType[] = [
-    "joy",
-    "calm",
-    "energy",
-    "anxiety",
-    "sadness",
-    "anger",
-    "neutral",
+  const baseDate = new Date("2025-12-12"); // Use a fixed base date for consistency
+
+  // Predefined pattern to avoid Math.random() hydration issues
+  const moodPattern = [7, 8, 6, 9, 7, 8, 5, 7, 8, 9, 6, 7, 8, 7, 6, 8, 9, 7, 8, 6, 7, 8, 9, 7, 6, 8, 7, 9, 8, 7];
+  const emotionPatterns: EmotionType[][] = [
+    ["joy", "energy"],
+    ["calm", "joy"],
+    ["anxiety", "neutral"],
+    ["joy", "calm", "energy"],
+    ["calm", "energy"],
+    ["joy", "calm"],
+    ["sadness", "anxiety"],
+    ["calm", "neutral"],
+    ["joy", "energy"],
+    ["joy", "calm", "energy"],
+    ["anxiety", "neutral"],
+    ["calm", "joy"],
+    ["joy", "energy", "calm"],
+    ["calm", "joy"],
+    ["neutral", "calm"],
+    ["joy", "energy"],
+    ["joy", "calm", "energy"],
+    ["calm", "energy"],
+    ["joy", "energy"],
+    ["neutral", "calm"],
+    ["calm", "joy"],
+    ["joy", "energy", "calm"],
+    ["joy", "calm", "energy"],
+    ["calm", "energy"],
+    ["neutral", "calm"],
+    ["joy", "energy"],
+    ["calm", "joy"],
+    ["joy", "calm", "energy"],
+    ["joy", "energy"],
+    ["calm", "joy"],
   ];
+  const noteIndices = [2, 5, 8, 12, 15, 18, 22, 25, 28]; // Fixed indices for notes
 
   for (let i = 29; i >= 0; i--) {
-    const date = new Date(today);
+    const date = new Date(baseDate);
     date.setDate(date.getDate() - i);
-
-    const moodValue = Math.floor(Math.random() * 6) + 5;
-    const numEmotions = Math.floor(Math.random() * 3) + 1;
-    const selectedEmotions: EmotionType[] = [];
-
-    for (let j = 0; j < numEmotions; j++) {
-      const emotion = emotions[Math.floor(Math.random() * emotions.length)];
-      if (emotion && !selectedEmotions.includes(emotion)) {
-        selectedEmotions.push(emotion);
-      }
-    }
 
     const entry: MoodEntry = {
       id: `mood-${i}`,
       date,
-      mood: moodValue as MoodLevel,
-      emotions: selectedEmotions,
+      mood: moodPattern[29 - i] as MoodLevel,
+      emotions: emotionPatterns[29 - i] || ["neutral"],
     };
 
-    if (Math.random() > 0.6) {
+    if (noteIndices.includes(29 - i)) {
       entry.note = "Journée productive et positive";
     }
 

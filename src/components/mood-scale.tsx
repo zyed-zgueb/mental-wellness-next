@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { Slider } from "@/components/ui/slider";
 import type { MoodLevel } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
@@ -43,6 +44,9 @@ export function MoodScale({
   className,
   showLabel = true,
 }: MoodScaleProps) {
+  // Memoize the value array to prevent infinite re-renders
+  const sliderValue = useMemo(() => [value], [value]);
+
   return (
     <div className={cn("space-y-4", className)}>
       {showLabel && (
@@ -66,7 +70,7 @@ export function MoodScale({
 
       <div className="relative">
         <Slider
-          value={[value]}
+          value={sliderValue}
           onValueChange={(values) => onChange(values[0] as MoodLevel)}
           min={1}
           max={10}

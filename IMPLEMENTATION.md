@@ -1,7 +1,7 @@
 # Plan d'Implémentation - Application de Suivi de Santé Mentale
 **Ce fichier doit-être mis à jour en fonction du status de chaque tâche**
 **Une phase est marquée terminée quand toutes les tâches de la phase sont réalisées**
-**Dernière mise à jour** : 2025-12-12 (Phase 2 terminée)
+**Dernière mise à jour** : 2025-12-12 (Phase 3.1 terminée)
 
 ---
 
@@ -10,7 +10,7 @@
 - **Phase 0** : Nettoyage du Boilerplate → 🟢 Terminé
 - **Phase 1** : Design System + Dashboard Minimal → 🟢 Terminé
 - **Phase 2** : i18n + Pages Légales + SEO → 🟢 Terminé
-- **Phase 3** : Pages de Tracking (Mood, Journal, etc.) → ⚪ Pas commencé
+- **Phase 3** : Pages de Tracking (Mood, Journal, etc.) → 🟡 En cours (3.1 terminé)
 - **Phase 4** : Visualisations & Analytics UI → ⚪ Pas commencé
 - **Phase 5** : Chat IA & Objectifs UI → ⚪ Pas commencé
 - **Phase 6** : Backend & Persistence → ⚪ Pas commencé
@@ -139,25 +139,27 @@
 
 ---
 
-## Phase 3 : Pages de Tracking ⚪
+## Phase 3 : Pages de Tracking 🟡
 
 **Objectif** : Créer toutes les interfaces de saisie de données avec mock data.
 
-### 3.1 Page de saisie rapide d'humeur
-- [ ] Créer `/app/track/mood/page.tsx`
-- [ ] Formulaire saisie rapide :
-  - [ ] Date/heure (par défaut maintenant, éditable)
-  - [ ] Échelle humeur 1-10 avec `MoodScale` slider
-  - [ ] Sélection émotions multiples (anxiété, joie, tristesse, colère, calme, énergie)
-  - [ ] Note optionnelle (textarea courte)
-  - [ ] Bouton "Enregistrer" avec animation de succès
-- [ ] Mode "saisie période" :
-  - [ ] Toggle pour basculer en mode période
-  - [ ] Sélection date début + date fin
-  - [ ] Humeur moyenne sur la période
-- [ ] Afficher historique des 5 dernières saisies en bas de page
-- [ ] Animations de feedback (confetti lors de l'enregistrement?)
-- [ ] SEO : metadata page tracking
+**Statut** : En cours - 3.1 terminé (2025-12-12)
+
+### 3.1 Page de saisie rapide d'humeur ✅
+- [x] Créer `/app/track/mood/page.tsx`
+- [x] Formulaire saisie rapide :
+  - [x] Date/heure (par défaut maintenant, éditable)
+  - [x] Échelle humeur 1-10 avec `MoodScale` slider
+  - [x] Sélection émotions multiples (anxiété, joie, tristesse, colère, calme, énergie)
+  - [x] Note optionnelle (textarea courte)
+  - [x] Bouton "Enregistrer" avec animation de succès (toast avec icône Sparkles)
+- [x] Mode "saisie période" :
+  - [x] Toggle pour basculer en mode période
+  - [x] Sélection date début + date fin
+  - [x] Humeur moyenne sur la période
+- [x] Afficher historique des 5 dernières saisies en bas de page
+- [x] Animations de feedback (toast animé avec succès)
+- [x] SEO : metadata page tracking (layout.tsx avec generateMetadata)
 
 ### 3.2 Page journal détaillé
 - [ ] Créer `/app/journal/page.tsx` - Liste des entrées journal
@@ -439,11 +441,12 @@ pnpm add @sentry/nextjs
 - Phase 2 - i18n + Pages Légales + SEO ✅ (2025-12-12)
   - Phase 2.1 - Internationalisation (i18n) ✅ (2025-12-11)
   - Phase 2.2 - Pages Légales + SEO ✅ (2025-12-12)
+- Phase 3.1 - Page de saisie rapide d'humeur ✅ (2025-12-12)
 
 **En cours** :
-- Aucune
+- Phase 3 - Pages de Tracking (3.1 terminé, reste 3.2, 3.3, 3.4)
 
-**Prochaine étape** : Phase 3 - Pages de Tracking (Mood, Journal, Symptoms, Activities)
+**Prochaine étape** : Phase 3.2 - Page journal détaillé
 
 ---
 
@@ -459,14 +462,18 @@ pnpm add @sentry/nextjs
 
 ### État actuel du code (2025-12-12)
 - **Structure** : App restructurée avec `[locale]` pour support multilingue
-- **Pages créées** : Home (landing), Dashboard (complet), Profile (basique), Chat (placeholder)
+- **Pages créées** :
+  - Home (landing), Dashboard (complet), Profile (basique), Chat (placeholder)
+  - Track Mood (`/[locale]/track/mood`) - Page de saisie d'humeur avec mode rapide et période
 - **Pages légales** : Privacy, Terms, Disclaimer, Cookies (FR/EN avec SEO optimisé)
 - **Composants custom** : EmotionIcon, MoodScale, StatCard, PageHeader, LanguageSwitcher, CookieConsent
 - **Navigation** : SiteHeader avec navigation complète + SiteFooter avec liens légaux
 - **Mock data** : `/lib/mock-data.ts` avec données pour mood, goals, journal, stats
 - **i18n** : Français et Anglais complètement implémentés (messages/fr.json, messages/en.json)
+  - Traductions ajoutées pour tracking.mood (formulaire, émotions, historique)
 - **Thème** : Dark mode supporté avec next-themes
 - **SEO** : JSON-LD structured data, sitemap.xml multilingue, robots.txt optimisé
+  - Métadonnées spécifiques pour page tracking d'humeur
 - **Conformité** : Bandeau de consentement cookies (RGPD), pages légales complètes
 
 ---
