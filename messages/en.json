@@ -114,6 +114,18 @@
     "trackMood": {
       "title": "Mood Tracking",
       "description": "Record your daily mood and emotions"
+    },
+    "journal": {
+      "title": "Journal",
+      "description": "Your daily thoughts and reflections journal"
+    },
+    "journalNew": {
+      "title": "New Journal Entry",
+      "description": "Create a new entry in your journal"
+    },
+    "journalEntry": {
+      "title": "Journal Entry",
+      "description": "Read and edit your journal entry"
     }
   },
   "tracking": {
@@ -170,6 +182,81 @@
         "9": "Excellent",
         "10": "Exceptional"
       }
+    }
+  },
+  "journal": {
+    "title": "Journal",
+    "description": "Explore your thoughts and reflections",
+    "list": {
+      "title": "My Journal Entries",
+      "noEntries": "No entries yet",
+      "noEntriesDescription": "Start writing to track your daily thoughts and reflections",
+      "createFirst": "Create my first entry",
+      "newEntry": "New Entry",
+      "searchPlaceholder": "Search your entries...",
+      "filterByMood": "Filter by mood",
+      "filterByTag": "Filter by tag",
+      "allMoods": "All moods",
+      "allTags": "All tags",
+      "sortBy": "Sort by",
+      "sortNewest": "Newest",
+      "sortOldest": "Oldest",
+      "sortMoodHigh": "High mood",
+      "sortMoodLow": "Low mood",
+      "entriesCount": {
+        "singular": "{count} entry",
+        "plural": "{count} entries"
+      },
+      "readMore": "Read more",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "form": {
+      "title": "Title",
+      "titlePlaceholder": "Give your entry a title (optional)",
+      "content": "Content",
+      "contentPlaceholder": "Write your thoughts, reflections, what happened today...",
+      "date": "Date",
+      "time": "Time",
+      "mood": "Associated mood",
+      "moodHelper": "How were you feeling during this time?",
+      "tags": "Tags",
+      "tagsPlaceholder": "Add tags (press Enter)",
+      "tagsHelper": "Examples: work, family, health, hobbies",
+      "addTag": "Add",
+      "removeTag": "Remove",
+      "images": "Photos",
+      "imagesHelper": "Photo upload will be available soon",
+      "save": "Save",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "delete": "Delete entry",
+      "confirmDelete": "Are you sure you want to delete this entry?",
+      "confirmDeleteDescription": "This action is irreversible."
+    },
+    "view": {
+      "edit": "Edit",
+      "delete": "Delete",
+      "back": "Back to journal",
+      "createdAt": "Created on",
+      "updatedAt": "Updated on",
+      "mood": "Mood",
+      "tags": "Tags",
+      "noTags": "No tags",
+      "notFound": "Entry not found",
+      "notFoundDescription": "The entry you're looking for doesn't exist or has been deleted."
+    },
+    "success": {
+      "created": "Entry created successfully",
+      "updated": "Entry updated successfully",
+      "deleted": "Entry deleted successfully"
+    },
+    "error": {
+      "loadFailed": "Failed to load entries",
+      "createFailed": "Failed to create entry",
+      "updateFailed": "Failed to update entry",
+      "deleteFailed": "Failed to delete entry",
+      "contentRequired": "Content is required"
     }
   },
   "legal": {

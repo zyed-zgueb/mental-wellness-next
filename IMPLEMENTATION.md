@@ -1,7 +1,7 @@
 # Plan d'Implémentation - Application de Suivi de Santé Mentale
 **Ce fichier doit-être mis à jour en fonction du status de chaque tâche**
 **Une phase est marquée terminée quand toutes les tâches de la phase sont réalisées**
-**Dernière mise à jour** : 2025-12-12 (Phase 3.1 terminée)
+**Dernière mise à jour** : 2025-12-14 (Phase 3.2 - 3 premières tâches terminées)
 
 ---
 
@@ -162,19 +162,19 @@
 - [x] SEO : metadata page tracking (layout.tsx avec generateMetadata)
 
 ### 3.2 Page journal détaillé
-- [ ] Créer `/app/journal/page.tsx` - Liste des entrées journal
-- [ ] Créer `/app/journal/new/page.tsx` - Nouvelle entrée
-- [ ] Créer `/app/journal/[id]/page.tsx` - Lecture/édition d'une entrée
-- [ ] Composant `JournalEntry` :
-  - [ ] Titre optionnel
-  - [ ] Date/heure
-  - [ ] Éditeur de texte riche (textarea avec formatting basique ou Tiptap)
-  - [ ] Tags libres (ex: travail, famille, santé)
-  - [ ] Humeur associée (MoodScale)
-  - [ ] Photos/images optionnelles (UI mockée, upload réel en Phase 5)
-- [ ] Liste journal : affichage chronologique avec filtres (date, humeur, tags)
-- [ ] Fonction recherche dans les entrées journal
-- [ ] SEO : metadata pages journal
+- [x] Créer `/app/[locale]/journal/page.tsx` - Liste des entrées journal
+- [x] Créer `/app/[locale]/journal/new/page.tsx` - Nouvelle entrée
+- [x] Créer `/app/[locale]/journal/[id]/page.tsx` - Lecture/édition d'une entrée
+- [x] Composant `JournalEntry` intégré dans les pages :
+  - [x] Titre optionnel
+  - [x] Date/heure
+  - [x] Éditeur de texte (textarea avec formatting basique)
+  - [x] Tags libres (ex: travail, famille, santé)
+  - [x] Humeur associée (MoodScale)
+  - [x] Photos/images optionnelles (UI mockée, upload réel en Phase 5)
+- [x] Liste journal : affichage chronologique avec filtres (date, humeur, tags)
+- [x] Fonction recherche dans les entrées journal (recherche full-text)
+- [x] SEO : metadata pages journal (FR/EN)
 
 ### 3.3 Page suivi des symptômes
 - [ ] Créer `/app/track/symptoms/page.tsx`
@@ -442,11 +442,12 @@ pnpm add @sentry/nextjs
   - Phase 2.1 - Internationalisation (i18n) ✅ (2025-12-11)
   - Phase 2.2 - Pages Légales + SEO ✅ (2025-12-12)
 - Phase 3.1 - Page de saisie rapide d'humeur ✅ (2025-12-12)
+- Phase 3.2 - Page journal détaillé ✅ (2025-12-14)
 
 **En cours** :
-- Phase 3 - Pages de Tracking (3.1 terminé, reste 3.2, 3.3, 3.4)
+- Phase 3 - Pages de Tracking (3.1 et 3.2 terminés, reste 3.3, 3.4)
 
-**Prochaine étape** : Phase 3.2 - Page journal détaillé
+**Prochaine étape** : Phase 3.3 - Page suivi des symptômes
 
 ---
 
@@ -460,20 +461,25 @@ pnpm add @sentry/nextjs
 - **shadcn/ui** : Utiliser uniquement les composants shadcn ✅ 27 composants installés
 - **IA** : Utiliser OpenRouter (pas OpenAI direct) avec env var `OPENROUTER_MODEL`
 
-### État actuel du code (2025-12-12)
+### État actuel du code (2025-12-14)
 - **Structure** : App restructurée avec `[locale]` pour support multilingue
 - **Pages créées** :
   - Home (landing), Dashboard (complet), Profile (basique), Chat (placeholder)
   - Track Mood (`/[locale]/track/mood`) - Page de saisie d'humeur avec mode rapide et période
+  - Journal (`/[locale]/journal`) - Liste des entrées avec recherche, filtres et tri
+  - Journal New (`/[locale]/journal/new`) - Création de nouvelle entrée
+  - Journal Entry (`/[locale]/journal/[id]`) - Lecture et édition d'entrée
 - **Pages légales** : Privacy, Terms, Disclaimer, Cookies (FR/EN avec SEO optimisé)
 - **Composants custom** : EmotionIcon, MoodScale, StatCard, PageHeader, LanguageSwitcher, CookieConsent
+- **Composants shadcn/ui** : 28 composants (ajout de alert-dialog)
 - **Navigation** : SiteHeader avec navigation complète + SiteFooter avec liens légaux
 - **Mock data** : `/lib/mock-data.ts` avec données pour mood, goals, journal, stats
 - **i18n** : Français et Anglais complètement implémentés (messages/fr.json, messages/en.json)
   - Traductions ajoutées pour tracking.mood (formulaire, émotions, historique)
+  - Traductions complètes pour journal (liste, formulaire, vue, recherche, filtres)
 - **Thème** : Dark mode supporté avec next-themes
 - **SEO** : JSON-LD structured data, sitemap.xml multilingue, robots.txt optimisé
-  - Métadonnées spécifiques pour page tracking d'humeur
+  - Métadonnées spécifiques pour pages tracking d'humeur et journal
 - **Conformité** : Bandeau de consentement cookies (RGPD), pages légales complètes
 
 ---

@@ -114,6 +114,18 @@
     "trackMood": {
       "title": "Suivi d'humeur",
       "description": "Enregistrez votre humeur et vos émotions quotidiennes"
+    },
+    "journal": {
+      "title": "Journal",
+      "description": "Votre journal de pensées et réflexions quotidiennes"
+    },
+    "journalNew": {
+      "title": "Nouvelle entrée journal",
+      "description": "Créer une nouvelle entrée dans votre journal"
+    },
+    "journalEntry": {
+      "title": "Entrée journal",
+      "description": "Lire et modifier votre entrée journal"
     }
   },
   "tracking": {
@@ -170,6 +182,81 @@
         "9": "Excellent",
         "10": "Exceptionnel"
       }
+    }
+  },
+  "journal": {
+    "title": "Journal",
+    "description": "Explorez vos pensées et réflexions",
+    "list": {
+      "title": "Mes entrées journal",
+      "noEntries": "Aucune entrée pour le moment",
+      "noEntriesDescription": "Commencez à écrire pour suivre vos pensées et réflexions quotidiennes",
+      "createFirst": "Créer ma première entrée",
+      "newEntry": "Nouvelle entrée",
+      "searchPlaceholder": "Rechercher dans vos entrées...",
+      "filterByMood": "Filtrer par humeur",
+      "filterByTag": "Filtrer par tag",
+      "allMoods": "Toutes les humeurs",
+      "allTags": "Tous les tags",
+      "sortBy": "Trier par",
+      "sortNewest": "Plus récent",
+      "sortOldest": "Plus ancien",
+      "sortMoodHigh": "Humeur haute",
+      "sortMoodLow": "Humeur basse",
+      "entriesCount": {
+        "singular": "{count} entrée",
+        "plural": "{count} entrées"
+      },
+      "readMore": "Lire la suite",
+      "edit": "Modifier",
+      "delete": "Supprimer"
+    },
+    "form": {
+      "title": "Titre",
+      "titlePlaceholder": "Donnez un titre à votre entrée (optionnel)",
+      "content": "Contenu",
+      "contentPlaceholder": "Écrivez vos pensées, réflexions, ce qui s'est passé aujourd'hui...",
+      "date": "Date",
+      "time": "Heure",
+      "mood": "Humeur associée",
+      "moodHelper": "Comment vous sentiez-vous pendant cette période ?",
+      "tags": "Tags",
+      "tagsPlaceholder": "Ajouter des tags (appuyez sur Entrée)",
+      "tagsHelper": "Exemples : travail, famille, santé, loisirs",
+      "addTag": "Ajouter",
+      "removeTag": "Retirer",
+      "images": "Photos",
+      "imagesHelper": "L'ajout de photos sera disponible prochainement",
+      "save": "Enregistrer",
+      "saving": "Enregistrement...",
+      "cancel": "Annuler",
+      "delete": "Supprimer l'entrée",
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette entrée ?",
+      "confirmDeleteDescription": "Cette action est irréversible."
+    },
+    "view": {
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "back": "Retour au journal",
+      "createdAt": "Créé le",
+      "updatedAt": "Modifié le",
+      "mood": "Humeur",
+      "tags": "Tags",
+      "noTags": "Aucun tag",
+      "notFound": "Entrée non trouvée",
+      "notFoundDescription": "L'entrée que vous recherchez n'existe pas ou a été supprimée."
+    },
+    "success": {
+      "created": "Entrée créée avec succès",
+      "updated": "Entrée mise à jour avec succès",
+      "deleted": "Entrée supprimée avec succès"
+    },
+    "error": {
+      "loadFailed": "Impossible de charger les entrées",
+      "createFailed": "Impossible de créer l'entrée",
+      "updateFailed": "Impossible de mettre à jour l'entrée",
+      "deleteFailed": "Impossible de supprimer l'entrée",
+      "contentRequired": "Le contenu est requis"
     }
   },
   "legal": {
