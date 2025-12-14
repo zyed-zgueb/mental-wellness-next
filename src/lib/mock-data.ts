@@ -23,6 +23,39 @@ export type SymptomType =
 
 export type SeverityLevel = 1 | 2 | 3 | 4 | 5;
 
+export type ActivityCategory =
+  | "medication"
+  | "meditation"
+  | "exercise"
+  | "therapy"
+  | "sleep"
+  | "nutrition"
+  | "social";
+
+export interface Activity {
+  id: string;
+  name: string;
+  category: ActivityCategory;
+  icon?: string;
+}
+
+export interface ActivityLog {
+  id: string;
+  date: Date;
+  activities: string[]; // Array of activity IDs
+  note?: string;
+}
+
+export interface Habit {
+  id: string;
+  name: string;
+  category: ActivityCategory;
+  targetFrequency: "daily" | "weekly";
+  currentStreak: number;
+  longestStreak: number;
+  lastCompleted?: Date;
+}
+
 export interface MoodEntry {
   id: string;
   date: Date;
@@ -295,6 +328,147 @@ function generateSymptomData(): SymptomEntry[] {
 
 // Mock symptom data
 export const mockSymptomData = generateSymptomData();
+
+// Mock activities - predefined list of common wellness activities
+export const mockActivities: Activity[] = [
+  // Medication
+  { id: "act-med-1", name: "Prendre médicaments matin", category: "medication" },
+  { id: "act-med-2", name: "Prendre médicaments soir", category: "medication" },
+
+  // Meditation
+  { id: "act-medit-1", name: "Méditation guidée", category: "meditation" },
+  { id: "act-medit-2", name: "Respiration profonde", category: "meditation" },
+  { id: "act-medit-3", name: "Pleine conscience", category: "meditation" },
+
+  // Exercise
+  { id: "act-ex-1", name: "Marche 30 min", category: "exercise" },
+  { id: "act-ex-2", name: "Yoga", category: "exercise" },
+  { id: "act-ex-3", name: "Course à pied", category: "exercise" },
+  { id: "act-ex-4", name: "Étirements", category: "exercise" },
+
+  // Therapy
+  { id: "act-ther-1", name: "Séance thérapie", category: "therapy" },
+  { id: "act-ther-2", name: "Journaling thérapeutique", category: "therapy" },
+
+  // Sleep
+  { id: "act-sleep-1", name: "8h de sommeil", category: "sleep" },
+  { id: "act-sleep-2", name: "Routine coucher", category: "sleep" },
+  { id: "act-sleep-3", name: "Sieste réparatrice", category: "sleep" },
+
+  // Nutrition
+  { id: "act-nutr-1", name: "Petit-déjeuner équilibré", category: "nutrition" },
+  { id: "act-nutr-2", name: "Boire 2L d'eau", category: "nutrition" },
+  { id: "act-nutr-3", name: "Repas sains", category: "nutrition" },
+
+  // Social
+  { id: "act-soc-1", name: "Appeler un proche", category: "social" },
+  { id: "act-soc-2", name: "Sortie entre amis", category: "social" },
+  { id: "act-soc-3", name: "Activité sociale", category: "social" },
+];
+
+// Generate activity logs for last 30 days
+function generateActivityLogs(): ActivityLog[] {
+  const logs: ActivityLog[] = [];
+  const baseDate = new Date("2025-12-12");
+
+  // Predefined patterns of activity IDs for each day
+  const activityPatterns: string[][] = [
+    ["act-med-1", "act-medit-1", "act-ex-1", "act-sleep-1", "act-nutr-1"],
+    ["act-med-1", "act-med-2", "act-sleep-1", "act-nutr-1", "act-nutr-2"],
+    ["act-med-1", "act-ex-2", "act-medit-2", "act-nutr-3"],
+    ["act-med-1", "act-med-2", "act-ex-1", "act-sleep-1", "act-soc-1"],
+    ["act-med-1", "act-medit-1", "act-sleep-2", "act-nutr-1"],
+    ["act-med-1", "act-med-2", "act-ex-3", "act-nutr-2", "act-soc-2"],
+    ["act-ther-1", "act-med-1", "act-medit-3", "act-sleep-1"],
+    ["act-med-1", "act-ex-1", "act-nutr-1", "act-nutr-2"],
+    ["act-med-1", "act-med-2", "act-medit-1", "act-sleep-1", "act-ex-4"],
+    ["act-med-1", "act-sleep-1", "act-nutr-3", "act-soc-1"],
+    ["act-med-1", "act-med-2", "act-ex-2", "act-medit-2", "act-nutr-1"],
+    ["act-med-1", "act-sleep-2", "act-ex-1", "act-nutr-2"],
+    ["act-med-1", "act-med-2", "act-medit-1", "act-sleep-1", "act-soc-3"],
+    ["act-ther-2", "act-med-1", "act-ex-1", "act-nutr-1"],
+    ["act-med-1", "act-med-2", "act-sleep-1", "act-medit-3", "act-nutr-2"],
+    ["act-med-1", "act-ex-3", "act-nutr-1", "act-soc-1"],
+    ["act-med-1", "act-med-2", "act-medit-1", "act-sleep-2", "act-ex-4"],
+    ["act-med-1", "act-sleep-1", "act-nutr-3", "act-nutr-2"],
+    ["act-med-1", "act-med-2", "act-ex-2", "act-medit-2"],
+    ["act-med-1", "act-sleep-1", "act-soc-2", "act-nutr-1"],
+    ["act-ther-1", "act-med-1", "act-med-2", "act-ex-1", "act-sleep-1"],
+    ["act-med-1", "act-medit-1", "act-nutr-2", "act-ex-4"],
+    ["act-med-1", "act-med-2", "act-sleep-2", "act-nutr-1"],
+    ["act-med-1", "act-ex-1", "act-medit-3", "act-soc-1"],
+    ["act-med-1", "act-med-2", "act-sleep-1", "act-nutr-3", "act-nutr-2"],
+    ["act-med-1", "act-ex-2", "act-medit-1", "act-soc-3"],
+    ["act-med-1", "act-med-2", "act-sleep-1", "act-nutr-1", "act-ex-4"],
+    ["act-ther-2", "act-med-1", "act-medit-2", "act-sleep-2"],
+    ["act-med-1", "act-med-2", "act-ex-1", "act-nutr-2", "act-soc-1"],
+    ["act-med-1", "act-sleep-1", "act-medit-1", "act-nutr-1", "act-ex-3"],
+  ];
+
+  for (let i = 29; i >= 0; i--) {
+    const date = new Date(baseDate);
+    date.setDate(date.getDate() - i);
+
+    logs.push({
+      id: `log-${29 - i}`,
+      date,
+      activities: activityPatterns[29 - i] || [],
+    });
+  }
+
+  return logs;
+}
+
+export const mockActivityLogs = generateActivityLogs();
+
+// Mock habits with tracking
+export const mockHabits: Habit[] = [
+  {
+    id: "habit-1",
+    name: "Méditation quotidienne",
+    category: "meditation",
+    targetFrequency: "daily",
+    currentStreak: 12,
+    longestStreak: 28,
+    lastCompleted: new Date("2025-12-12"),
+  },
+  {
+    id: "habit-2",
+    name: "Exercice physique",
+    category: "exercise",
+    targetFrequency: "daily",
+    currentStreak: 8,
+    longestStreak: 15,
+    lastCompleted: new Date("2025-12-12"),
+  },
+  {
+    id: "habit-3",
+    name: "Prendre médicaments",
+    category: "medication",
+    targetFrequency: "daily",
+    currentStreak: 30,
+    longestStreak: 45,
+    lastCompleted: new Date("2025-12-12"),
+  },
+  {
+    id: "habit-4",
+    name: "Boire 2L d'eau",
+    category: "nutrition",
+    targetFrequency: "daily",
+    currentStreak: 5,
+    longestStreak: 20,
+    lastCompleted: new Date("2025-12-11"),
+  },
+  {
+    id: "habit-5",
+    name: "Contact social",
+    category: "social",
+    targetFrequency: "weekly",
+    currentStreak: 3,
+    longestStreak: 8,
+    lastCompleted: new Date("2025-12-10"),
+  },
+];
 
 // Mock stats
 export const mockStats: Stats = {

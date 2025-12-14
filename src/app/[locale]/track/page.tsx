@@ -36,7 +36,7 @@ const trackingPages = [
     href: "/track/activities",
     icon: Dumbbell,
     gradient: "from-purple-500 to-pink-500",
-    available: false,
+    available: true,
   },
 ] as const;
 

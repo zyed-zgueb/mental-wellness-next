@@ -1,7 +1,7 @@
 # Plan d'Implémentation - Application de Suivi de Santé Mentale
 **Ce fichier doit-être mis à jour en fonction du status de chaque tâche**
 **Une phase est marquée terminée quand toutes les tâches de la phase sont réalisées**
-**Dernière mise à jour** : 2025-12-14 (Phase 3.3 terminée)
+**Dernière mise à jour** : 2025-12-14 (Phase 3.4 terminée)
 
 ---
 
@@ -10,7 +10,7 @@
 - **Phase 0** : Nettoyage du Boilerplate → 🟢 Terminé
 - **Phase 1** : Design System + Dashboard Minimal → 🟢 Terminé
 - **Phase 2** : i18n + Pages Légales + SEO → 🟢 Terminé
-- **Phase 3** : Pages de Tracking (Mood, Journal, etc.) → 🟡 En cours (3.1 terminé)
+- **Phase 3** : Pages de Tracking (Mood, Journal, etc.) → 🟢 Terminé
 - **Phase 4** : Visualisations & Analytics UI → ⚪ Pas commencé
 - **Phase 5** : Chat IA & Objectifs UI → ⚪ Pas commencé
 - **Phase 6** : Backend & Persistence → ⚪ Pas commencé
@@ -139,11 +139,11 @@
 
 ---
 
-## Phase 3 : Pages de Tracking 🟡
+## Phase 3 : Pages de Tracking 🟢
 
 **Objectif** : Créer toutes les interfaces de saisie de données avec mock data.
 
-**Statut** : En cours - 3.1 terminé (2025-12-12)
+**Statut** : ✅ Phase terminée - 2025-12-14
 
 ### 3.1 Page de saisie rapide d'humeur ✅
 - [x] Créer `/app/track/mood/page.tsx`
@@ -184,13 +184,13 @@
 - [x] Vue calendrier avec heatmap des symptômes (mock data)
 - [x] SEO : metadata page symptoms
 
-### 3.4 Page activités & habitudes
-- [ ] Créer `/app/track/activities/page.tsx`
-- [ ] Catégories d'activités (Médicaments, Méditation, Exercice, Thérapie, Sommeil, Alimentation, Social)
-- [ ] Interface rapide pour cocher activités du jour
-- [ ] Tracking de habitudes avec streaks
-- [ ] Vue historique des habitudes avec graphiques
-- [ ] SEO : metadata page activities
+### 3.4 Page activités & habitudes ✅
+- [x] Créer `/app/[locale]/track/activities/page.tsx`
+- [x] Catégories d'activités (Médicaments, Méditation, Exercice, Thérapie, Sommeil, Alimentation, Social)
+- [x] Interface rapide pour cocher activités du jour
+- [x] Tracking de habitudes avec streaks
+- [x] Vue historique des habitudes avec graphiques
+- [x] SEO : metadata page activities
 
 ---
 
@@ -441,14 +441,16 @@ pnpm add @sentry/nextjs
 - Phase 2 - i18n + Pages Légales + SEO ✅ (2025-12-12)
   - Phase 2.1 - Internationalisation (i18n) ✅ (2025-12-11)
   - Phase 2.2 - Pages Légales + SEO ✅ (2025-12-12)
-- Phase 3.1 - Page de saisie rapide d'humeur ✅ (2025-12-12)
-- Phase 3.2 - Page journal détaillé ✅ (2025-12-14)
-- Phase 3.3 - Page suivi des symptômes ✅ (2025-12-14)
+- Phase 3 - Pages de Tracking ✅ (2025-12-14)
+  - Phase 3.1 - Page de saisie rapide d'humeur ✅ (2025-12-12)
+  - Phase 3.2 - Page journal détaillé ✅ (2025-12-14)
+  - Phase 3.3 - Page suivi des symptômes ✅ (2025-12-14)
+  - Phase 3.4 - Page activités & habitudes ✅ (2025-12-14)
 
 **En cours** :
-- Phase 3 - Pages de Tracking (3.1, 3.2 et 3.3 terminés, reste 3.4)
+- Aucune phase en cours
 
-**Prochaine étape** : Phase 3.4 - Page activités & habitudes
+**Prochaine étape** : Phase 4 - Visualisations & Analytics UI
 
 ---
 
@@ -469,24 +471,30 @@ pnpm add @sentry/nextjs
   - **Track Hub** (`/[locale]/track`) - Page hub avec cartes de navigation vers toutes les pages de tracking
   - Track Mood (`/[locale]/track/mood`) - Page de saisie d'humeur avec mode rapide et période
   - Track Symptoms (`/[locale]/track/symptoms`) - Page de suivi des symptômes avec heatmap calendrier
+  - Track Activities (`/[locale]/track/activities`) - Page de suivi des activités et habitudes avec 7 catégories
   - Journal (`/[locale]/journal`) - Liste des entrées avec recherche, filtres et tri
   - Journal New (`/[locale]/journal/new`) - Création de nouvelle entrée
   - Journal Entry (`/[locale]/journal/[id]`) - Lecture et édition d'entrée
 - **Pages légales** : Privacy, Terms, Disclaimer, Cookies (FR/EN avec SEO optimisé)
 - **Composants custom** : EmotionIcon, MoodScale, StatCard, PageHeader, LanguageSwitcher, CookieConsent
 - **Composants shadcn/ui** : 28 composants (ajout de alert-dialog)
-- **Navigation** : SiteHeader avec navigation complète + SiteFooter avec liens légaux
-- **Mock data** : `/lib/mock-data.ts` avec données pour mood, goals, journal, stats, symptoms
-  - Types ajoutés : SymptomType, SeverityLevel, SymptomRecord, SymptomEntry
+- **Navigation** : SiteHeader avec navigation complète (pointe vers `/track` hub) + SiteFooter avec liens légaux
+- **Mock data** : `/lib/mock-data.ts` avec données pour mood, goals, journal, stats, symptoms, activities, habits
+  - Types ajoutés pour symptômes : SymptomType, SeverityLevel, SymptomRecord, SymptomEntry
+  - Types ajoutés pour activités : ActivityCategory, Activity, ActivityLog, Habit
   - 10 types de symptômes physiques courants
+  - 22 activités réparties en 7 catégories (Medication, Meditation, Exercise, Therapy, Sleep, Nutrition, Social)
+  - 5 habitudes avec système de streaks
   - Données générées pour 30 derniers jours avec patterns variés
 - **i18n** : Français et Anglais complètement implémentés (messages/fr.json, messages/en.json)
+  - Traductions ajoutées pour tracking.hub (page hub de navigation)
   - Traductions ajoutées pour tracking.mood (formulaire, émotions, historique)
   - Traductions ajoutées pour tracking.symptoms (formulaire, types, sévérité, heatmap, historique)
+  - Traductions ajoutées pour tracking.activities (catégories, formulaire, habitudes, graphiques)
   - Traductions complètes pour journal (liste, formulaire, vue, recherche, filtres)
 - **Thème** : Dark mode supporté avec next-themes
 - **SEO** : JSON-LD structured data, sitemap.xml multilingue, robots.txt optimisé
-  - Métadonnées spécifiques pour pages tracking d'humeur, symptômes et journal
+  - Métadonnées spécifiques pour toutes les pages de tracking (mood, symptoms, activities, journal)
 - **Conformité** : Bandeau de consentement cookies (RGPD), pages légales complètes
 
 ---

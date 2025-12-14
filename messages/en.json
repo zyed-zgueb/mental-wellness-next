@@ -2,7 +2,8 @@
   "common": {
     "appName": "MindWell",
     "loading": "Loading...",
-    "skipToContent": "Skip to main content"
+    "skipToContent": "Skip to main content",
+    "days": "days"
   },
   "navigation": {
     "dashboard": "Dashboard",
@@ -134,6 +135,10 @@
     "tracking": {
       "title": "Daily Tracking",
       "description": "Choose what you want to track today"
+    },
+    "trackActivities": {
+      "title": "Activities & Habits",
+      "description": "Track your daily activities and healthy habits"
     }
   },
   "tracking": {
@@ -265,6 +270,36 @@
       "success": {
         "title": "Symptoms saved!",
         "message": "Your symptoms have been saved successfully."
+      }
+    },
+    "activities": {
+      "title": "Activities & Habits",
+      "description": "Track your daily activities and healthy habits",
+      "form": {
+        "title": "Log Activities",
+        "save": "Save",
+        "saving": "Saving..."
+      },
+      "categories": {
+        "medication": "Medication",
+        "meditation": "Meditation",
+        "exercise": "Exercise",
+        "therapy": "Therapy",
+        "sleep": "Sleep",
+        "nutrition": "Nutrition",
+        "social": "Social"
+      },
+      "habits": {
+        "title": "My Habits",
+        "description": "Track your daily habits",
+        "progress": "Progress"
+      },
+      "recentActivity": {
+        "title": "Recent Activity (7d)"
+      },
+      "success": {
+        "title": "Activities saved!",
+        "message": "{count, plural, =0 {No activities saved} =1 {1 activity saved successfully} other {# activities saved successfully}}"
       }
     }
   },
