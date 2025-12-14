@@ -22,7 +22,7 @@ export function SiteHeader() {
     },
     {
       name: t("navigation.tracking"),
-      href: "/track/mood",
+      href: "/track",
       icon: Activity,
     },
     {

@@ -9,6 +9,20 @@ export type EmotionType =
   | "anger"
   | "neutral";
 
+export type SymptomType =
+  | "headache"
+  | "fatigue"
+  | "muscle_tension"
+  | "stomach_ache"
+  | "insomnia"
+  | "heart_racing"
+  | "dizziness"
+  | "back_pain"
+  | "chest_tightness"
+  | "nausea";
+
+export type SeverityLevel = 1 | 2 | 3 | 4 | 5;
+
 export interface MoodEntry {
   id: string;
   date: Date;
@@ -35,6 +49,18 @@ export interface JournalEntry {
   date: Date;
   mood: MoodLevel;
   tags: string[];
+}
+
+export interface SymptomRecord {
+  symptom: SymptomType;
+  severity: SeverityLevel;
+}
+
+export interface SymptomEntry {
+  id: string;
+  date: Date;
+  symptoms: SymptomRecord[];
+  note?: string;
 }
 
 export interface Stats {
@@ -200,6 +226,75 @@ export const mockJournalEntries: JournalEntry[] = [
     tags: ["routine", "organisation", "santé"],
   },
 ];
+
+// Generate symptom data for the last 30 days
+function generateSymptomData(): SymptomEntry[] {
+  const symptoms: SymptomEntry[] = [];
+  const baseDate = new Date("2025-12-12"); // Use fixed base date for consistency
+
+  // Predefined patterns for symptoms (not every day has symptoms)
+  const symptomPatterns: SymptomRecord[][] = [
+    [], // Day 0 - no symptoms
+    [{ symptom: "headache", severity: 2 }],
+    [{ symptom: "fatigue", severity: 3 }],
+    [], // Day 3 - no symptoms
+    [{ symptom: "muscle_tension", severity: 2 }, { symptom: "headache", severity: 1 }],
+    [], // Day 5 - no symptoms
+    [{ symptom: "insomnia", severity: 4 }],
+    [{ symptom: "fatigue", severity: 5 }, { symptom: "headache", severity: 3 }],
+    [], // Day 8 - no symptoms
+    [{ symptom: "stomach_ache", severity: 2 }],
+    [{ symptom: "muscle_tension", severity: 3 }],
+    [], // Day 11 - no symptoms
+    [], // Day 12 - no symptoms
+    [{ symptom: "heart_racing", severity: 3 }, { symptom: "chest_tightness", severity: 2 }],
+    [{ symptom: "dizziness", severity: 2 }],
+    [], // Day 15 - no symptoms
+    [{ symptom: "back_pain", severity: 3 }],
+    [{ symptom: "headache", severity: 2 }, { symptom: "fatigue", severity: 2 }],
+    [], // Day 18 - no symptoms
+    [], // Day 19 - no symptoms
+    [{ symptom: "muscle_tension", severity: 4 }],
+    [{ symptom: "nausea", severity: 2 }],
+    [], // Day 22 - no symptoms
+    [{ symptom: "insomnia", severity: 3 }],
+    [{ symptom: "fatigue", severity: 4 }],
+    [], // Day 25 - no symptoms
+    [{ symptom: "headache", severity: 3 }],
+    [], // Day 27 - no symptoms
+    [{ symptom: "muscle_tension", severity: 2 }, { symptom: "back_pain", severity: 2 }],
+    [{ symptom: "fatigue", severity: 2 }],
+  ];
+
+  const noteIndices = [1, 6, 7, 13, 16, 20, 23, 24, 26]; // Days with notes
+
+  for (let i = 29; i >= 0; i--) {
+    const date = new Date(baseDate);
+    date.setDate(date.getDate() - i);
+
+    const daySymptoms = symptomPatterns[29 - i];
+
+    // Only add entry if there are symptoms for that day
+    if (daySymptoms && daySymptoms.length > 0) {
+      const entry: SymptomEntry = {
+        id: `symptom-${29 - i}`,
+        date,
+        symptoms: daySymptoms,
+      };
+
+      if (noteIndices.includes(29 - i)) {
+        entry.note = "Stress au travail, j'ai remarqué que ça empire les symptômes";
+      }
+
+      symptoms.push(entry);
+    }
+  }
+
+  return symptoms;
+}
+
+// Mock symptom data
+export const mockSymptomData = generateSymptomData();
 
 // Mock stats
 export const mockStats: Stats = {

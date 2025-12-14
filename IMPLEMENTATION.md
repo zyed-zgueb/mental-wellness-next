@@ -1,7 +1,7 @@
 # Plan d'Implémentation - Application de Suivi de Santé Mentale
 **Ce fichier doit-être mis à jour en fonction du status de chaque tâche**
 **Une phase est marquée terminée quand toutes les tâches de la phase sont réalisées**
-**Dernière mise à jour** : 2025-12-14 (Phase 3.2 - 3 premières tâches terminées)
+**Dernière mise à jour** : 2025-12-14 (Phase 3.3 terminée)
 
 ---
 
@@ -176,13 +176,13 @@
 - [x] Fonction recherche dans les entrées journal (recherche full-text)
 - [x] SEO : metadata pages journal (FR/EN)
 
-### 3.3 Page suivi des symptômes
-- [ ] Créer `/app/track/symptoms/page.tsx`
-- [ ] Liste de symptômes physiques courants avec checkboxes
-- [ ] Intensité par symptôme (slider 1-5)
-- [ ] Sélecteur de date
-- [ ] Vue calendrier avec heatmap des symptômes (mock data)
-- [ ] SEO : metadata page symptoms
+### 3.3 Page suivi des symptômes ✅
+- [x] Créer `/app/[locale]/track/symptoms/page.tsx`
+- [x] Liste de symptômes physiques courants avec checkboxes
+- [x] Intensité par symptôme (slider 1-5)
+- [x] Sélecteur de date
+- [x] Vue calendrier avec heatmap des symptômes (mock data)
+- [x] SEO : metadata page symptoms
 
 ### 3.4 Page activités & habitudes
 - [ ] Créer `/app/track/activities/page.tsx`
@@ -443,11 +443,12 @@ pnpm add @sentry/nextjs
   - Phase 2.2 - Pages Légales + SEO ✅ (2025-12-12)
 - Phase 3.1 - Page de saisie rapide d'humeur ✅ (2025-12-12)
 - Phase 3.2 - Page journal détaillé ✅ (2025-12-14)
+- Phase 3.3 - Page suivi des symptômes ✅ (2025-12-14)
 
 **En cours** :
-- Phase 3 - Pages de Tracking (3.1 et 3.2 terminés, reste 3.3, 3.4)
+- Phase 3 - Pages de Tracking (3.1, 3.2 et 3.3 terminés, reste 3.4)
 
-**Prochaine étape** : Phase 3.3 - Page suivi des symptômes
+**Prochaine étape** : Phase 3.4 - Page activités & habitudes
 
 ---
 
@@ -465,7 +466,9 @@ pnpm add @sentry/nextjs
 - **Structure** : App restructurée avec `[locale]` pour support multilingue
 - **Pages créées** :
   - Home (landing), Dashboard (complet), Profile (basique), Chat (placeholder)
+  - **Track Hub** (`/[locale]/track`) - Page hub avec cartes de navigation vers toutes les pages de tracking
   - Track Mood (`/[locale]/track/mood`) - Page de saisie d'humeur avec mode rapide et période
+  - Track Symptoms (`/[locale]/track/symptoms`) - Page de suivi des symptômes avec heatmap calendrier
   - Journal (`/[locale]/journal`) - Liste des entrées avec recherche, filtres et tri
   - Journal New (`/[locale]/journal/new`) - Création de nouvelle entrée
   - Journal Entry (`/[locale]/journal/[id]`) - Lecture et édition d'entrée
@@ -473,13 +476,17 @@ pnpm add @sentry/nextjs
 - **Composants custom** : EmotionIcon, MoodScale, StatCard, PageHeader, LanguageSwitcher, CookieConsent
 - **Composants shadcn/ui** : 28 composants (ajout de alert-dialog)
 - **Navigation** : SiteHeader avec navigation complète + SiteFooter avec liens légaux
-- **Mock data** : `/lib/mock-data.ts` avec données pour mood, goals, journal, stats
+- **Mock data** : `/lib/mock-data.ts` avec données pour mood, goals, journal, stats, symptoms
+  - Types ajoutés : SymptomType, SeverityLevel, SymptomRecord, SymptomEntry
+  - 10 types de symptômes physiques courants
+  - Données générées pour 30 derniers jours avec patterns variés
 - **i18n** : Français et Anglais complètement implémentés (messages/fr.json, messages/en.json)
   - Traductions ajoutées pour tracking.mood (formulaire, émotions, historique)
+  - Traductions ajoutées pour tracking.symptoms (formulaire, types, sévérité, heatmap, historique)
   - Traductions complètes pour journal (liste, formulaire, vue, recherche, filtres)
 - **Thème** : Dark mode supporté avec next-themes
 - **SEO** : JSON-LD structured data, sitemap.xml multilingue, robots.txt optimisé
-  - Métadonnées spécifiques pour pages tracking d'humeur et journal
+  - Métadonnées spécifiques pour pages tracking d'humeur, symptômes et journal
 - **Conformité** : Bandeau de consentement cookies (RGPD), pages légales complètes
 
 ---

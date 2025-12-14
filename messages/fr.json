@@ -126,9 +126,41 @@
     "journalEntry": {
       "title": "Entrée journal",
       "description": "Lire et modifier votre entrée journal"
+    },
+    "trackSymptoms": {
+      "title": "Suivi des symptômes",
+      "description": "Enregistrez et suivez vos symptômes physiques quotidiens"
+    },
+    "tracking": {
+      "title": "Suivi quotidien",
+      "description": "Choisissez ce que vous souhaitez suivre aujourd'hui"
     }
   },
   "tracking": {
+    "hub": {
+      "title": "Suivi quotidien",
+      "description": "Choisissez ce que vous souhaitez suivre aujourd'hui",
+      "pages": {
+        "mood": {
+          "title": "Suivi d'humeur",
+          "description": "Enregistrez votre humeur et vos émotions quotidiennes"
+        },
+        "symptoms": {
+          "title": "Suivi des symptômes",
+          "description": "Suivez vos symptômes physiques et leur intensité"
+        },
+        "activities": {
+          "title": "Activités & Habitudes",
+          "description": "Suivez vos activités, médicaments et routines quotidiennes"
+        }
+      },
+      "startTracking": "Commencer le suivi",
+      "comingSoon": "Bientôt disponible",
+      "tip": {
+        "title": "Conseil",
+        "content": "Un suivi régulier vous aide à mieux comprendre vos patterns et à identifier les déclencheurs potentiels. Prenez quelques minutes chaque jour pour enregistrer vos données."
+      }
+    },
     "mood": {
       "title": "Suivi d'humeur",
       "description": "Comment vous sentez-vous en ce moment ?",
@@ -181,6 +213,58 @@
         "8": "Très bon",
         "9": "Excellent",
         "10": "Exceptionnel"
+      }
+    },
+    "symptoms": {
+      "title": "Suivi des symptômes",
+      "description": "Suivez vos symptômes physiques quotidiens",
+      "form": {
+        "title": "Enregistrer les symptômes",
+        "date": "Date",
+        "selectSymptoms": "Sélectionnez vos symptômes",
+        "symptomsHelper": "Cochez les symptômes que vous ressentez aujourd'hui",
+        "severity": "Intensité",
+        "addNote": "Ajouter une note (optionnel)",
+        "notePlaceholder": "Décrivez comment vous vous sentez, les déclencheurs potentiels...",
+        "save": "Enregistrer",
+        "saving": "Enregistrement..."
+      },
+      "types": {
+        "headache": "Mal de tête",
+        "fatigue": "Fatigue",
+        "muscle_tension": "Tensions musculaires",
+        "stomach_ache": "Maux de ventre",
+        "insomnia": "Insomnie",
+        "heart_racing": "Palpitations",
+        "dizziness": "Vertiges",
+        "back_pain": "Mal de dos",
+        "chest_tightness": "Oppression thoracique",
+        "nausea": "Nausée"
+      },
+      "severity": {
+        "mild": "Léger",
+        "moderate": "Modéré",
+        "severe": "Sévère"
+      },
+      "heatmap": {
+        "title": "Calendrier des symptômes",
+        "legend": "Légende",
+        "none": "Aucun",
+        "mild": "Légers",
+        "moderate": "Modérés",
+        "severe": "Sévères"
+      },
+      "recentEntries": {
+        "title": "Dernières saisies",
+        "noEntries": "Aucune saisie de symptômes",
+        "symptom": {
+          "singular": "symptôme",
+          "plural": "symptômes"
+        }
+      },
+      "success": {
+        "title": "Symptômes enregistrés !",
+        "message": "Vos symptômes ont été enregistrés avec succès."
       }
     }
   },

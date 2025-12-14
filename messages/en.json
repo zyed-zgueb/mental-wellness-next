@@ -126,9 +126,41 @@
     "journalEntry": {
       "title": "Journal Entry",
       "description": "Read and edit your journal entry"
+    },
+    "trackSymptoms": {
+      "title": "Symptom Tracking",
+      "description": "Record and track your daily physical symptoms"
+    },
+    "tracking": {
+      "title": "Daily Tracking",
+      "description": "Choose what you want to track today"
     }
   },
   "tracking": {
+    "hub": {
+      "title": "Daily Tracking",
+      "description": "Choose what you want to track today",
+      "pages": {
+        "mood": {
+          "title": "Mood Tracking",
+          "description": "Record your daily mood and emotions"
+        },
+        "symptoms": {
+          "title": "Symptom Tracking",
+          "description": "Track your physical symptoms and their intensity"
+        },
+        "activities": {
+          "title": "Activities & Habits",
+          "description": "Track your activities, medications, and daily routines"
+        }
+      },
+      "startTracking": "Start Tracking",
+      "comingSoon": "Coming Soon",
+      "tip": {
+        "title": "Tip",
+        "content": "Regular tracking helps you better understand your patterns and identify potential triggers. Take a few minutes each day to record your data."
+      }
+    },
     "mood": {
       "title": "Mood Tracking",
       "description": "How are you feeling right now?",
@@ -181,6 +213,58 @@
         "8": "Very good",
         "9": "Excellent",
         "10": "Exceptional"
+      }
+    },
+    "symptoms": {
+      "title": "Symptom Tracking",
+      "description": "Track your daily physical symptoms",
+      "form": {
+        "title": "Record Symptoms",
+        "date": "Date",
+        "selectSymptoms": "Select your symptoms",
+        "symptomsHelper": "Check the symptoms you're experiencing today",
+        "severity": "Severity",
+        "addNote": "Add a note (optional)",
+        "notePlaceholder": "Describe how you feel, potential triggers...",
+        "save": "Save",
+        "saving": "Saving..."
+      },
+      "types": {
+        "headache": "Headache",
+        "fatigue": "Fatigue",
+        "muscle_tension": "Muscle tension",
+        "stomach_ache": "Stomach ache",
+        "insomnia": "Insomnia",
+        "heart_racing": "Heart racing",
+        "dizziness": "Dizziness",
+        "back_pain": "Back pain",
+        "chest_tightness": "Chest tightness",
+        "nausea": "Nausea"
+      },
+      "severity": {
+        "mild": "Mild",
+        "moderate": "Moderate",
+        "severe": "Severe"
+      },
+      "heatmap": {
+        "title": "Symptom Calendar",
+        "legend": "Legend",
+        "none": "None",
+        "mild": "Mild",
+        "moderate": "Moderate",
+        "severe": "Severe"
+      },
+      "recentEntries": {
+        "title": "Recent Entries",
+        "noEntries": "No symptom entries",
+        "symptom": {
+          "singular": "symptom",
+          "plural": "symptoms"
+        }
+      },
+      "success": {
+        "title": "Symptoms saved!",
+        "message": "Your symptoms have been saved successfully."
       }
     }
   },
