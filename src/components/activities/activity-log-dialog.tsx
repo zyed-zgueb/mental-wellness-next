@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Check, Clock } from "lucide-react";
+import { Check, Clock, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,12 +22,17 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { mockAllActivities, type Activity } from "@/lib/mock-data";
+import { cn } from "@/lib/utils";
+import type { TimelineLog } from "./timeline-entry";
 
 interface ActivityLogDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   preselectedActivity?: Activity;
+  quickPickActivities?: Activity[]; // Quick picks to show as chips
   defaultTime?: string; // Format: "HH:mm"
+  defaultDuration?: number; // Duration in minutes
+  editingLog?: TimelineLog; // If provided, dialog is in edit mode
   onLog: (log: {
     activityId: string;
     timestamp: Date;
@@ -35,14 +40,19 @@ interface ActivityLogDialogProps {
     intensity?: 1 | 2 | 3 | 4 | 5;
     note?: string;
   }) => void;
+  onDelete?: (id: string) => void; // Optional delete handler
 }
 
 export function ActivityLogDialog({
   open,
   onOpenChange,
   preselectedActivity,
+  quickPickActivities = [],
   defaultTime,
+  defaultDuration,
+  editingLog,
   onLog,
+  onDelete,
 }: ActivityLogDialogProps) {
   const [selectedActivityId, setSelectedActivityId] = useState<string | undefined>(
     preselectedActivity?.id
@@ -52,33 +62,47 @@ export function ActivityLogDialog({
   const [intensity, setIntensity] = useState<string>("");
   const [note, setNote] = useState<string>("");
 
+  const isEditMode = !!editingLog;
+
   // Initialize form when dialog opens
   useEffect(() => {
     if (!open) return;
 
     // Use requestAnimationFrame to avoid synchronous setState
     requestAnimationFrame(() => {
-      if (defaultTime) {
-        setTime(defaultTime);
-      } else {
-        const now = new Date();
-        const hours = String(now.getHours()).padStart(2, "0");
-        const minutes = String(now.getMinutes()).padStart(2, "0");
+      if (editingLog) {
+        // Edit mode: populate from existing log
+        const hours = String(editingLog.timestamp.getHours()).padStart(2, "0");
+        const minutes = String(editingLog.timestamp.getMinutes()).padStart(2, "0");
         setTime(`${hours}:${minutes}`);
-      }
-
-      // Set or reset activity ID based on preselected
-      if (preselectedActivity) {
-        setSelectedActivityId(preselectedActivity.id);
+        setSelectedActivityId(editingLog.activityId);
+        setDuration(editingLog.duration ? String(editingLog.duration) : "");
+        setIntensity(editingLog.intensity ? String(editingLog.intensity) : "");
+        setNote(editingLog.note || "");
       } else {
-        setSelectedActivityId(undefined);
-      }
+        // Create mode
+        if (defaultTime) {
+          setTime(defaultTime);
+        } else {
+          const now = new Date();
+          const hours = String(now.getHours()).padStart(2, "0");
+          const minutes = String(now.getMinutes()).padStart(2, "0");
+          setTime(`${hours}:${minutes}`);
+        }
 
-      setDuration("");
-      setIntensity("");
-      setNote("");
+        // Set or reset activity ID based on preselected
+        if (preselectedActivity) {
+          setSelectedActivityId(preselectedActivity.id);
+        } else {
+          setSelectedActivityId(undefined);
+        }
+
+        setDuration(defaultDuration ? String(defaultDuration) : "");
+        setIntensity("");
+        setNote("");
+      }
     });
-  }, [open, defaultTime, preselectedActivity]);
+  }, [open, defaultTime, defaultDuration, preselectedActivity, editingLog]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -129,14 +153,50 @@ export function ActivityLogDialog({
         <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>
-              {preselectedActivity ? `Logger: ${preselectedActivity.name}` : "Logger une activité"}
+              {isEditMode
+                ? "Modifier l'activité"
+                : preselectedActivity
+                  ? `Logger: ${preselectedActivity.name}`
+                  : "Logger une activité"}
             </DialogTitle>
             <DialogDescription>
-              Enregistrez une activité avec l'heure et des détails optionnels.
+              {isEditMode
+                ? "Modifiez les détails de votre activité."
+                : "Enregistrez une activité avec l'heure et des détails optionnels."}
             </DialogDescription>
           </DialogHeader>
 
           <div className="grid gap-4 py-4">
+            {/* Quick picks chips (if not preselected and quick picks available) */}
+            {!preselectedActivity && quickPickActivities.length > 0 && (
+              <div className="space-y-2">
+                <Label className="text-xs text-muted-foreground">⚡ Favoris</Label>
+                <div className="flex flex-wrap gap-2">
+                  {quickPickActivities.map((activity) => {
+                    const isEmoji = activity.icon && /\p{Emoji}/u.test(activity.icon);
+                    const isSelected = selectedActivityId === activity.id;
+
+                    return (
+                      <Button
+                        key={activity.id}
+                        type="button"
+                        variant={isSelected ? "default" : "outline"}
+                        size="sm"
+                        className={cn(
+                          "h-8 text-xs transition-all",
+                          isSelected && "ring-2 ring-primary ring-offset-2"
+                        )}
+                        onClick={() => setSelectedActivityId(activity.id)}
+                      >
+                        {isEmoji && <span className="mr-1.5">{activity.icon}</span>}
+                        {activity.name}
+                      </Button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             {/* Activity selector (if not preselected) */}
             {!preselectedActivity && (
               <div className="grid gap-2">
@@ -230,18 +290,39 @@ export function ActivityLogDialog({
             </div>
           </div>
 
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-            >
-              Annuler
-            </Button>
-            <Button type="submit" disabled={!selectedActivityId || !time}>
-              <Check className="mr-2 h-4 w-4" />
-              Logger
-            </Button>
+          <DialogFooter className="flex-col sm:flex-row gap-2">
+            {/* Delete button (only in edit mode) */}
+            {isEditMode && editingLog && onDelete && (
+              <Button
+                type="button"
+                variant="destructive"
+                size="sm"
+                className="sm:mr-auto"
+                onClick={() => {
+                  if (confirm("Supprimer cette activité ?")) {
+                    onDelete(editingLog.id);
+                    onOpenChange(false);
+                  }
+                }}
+              >
+                <Trash2 className="mr-2 h-4 w-4" />
+                Supprimer
+              </Button>
+            )}
+
+            <div className="flex gap-2 sm:ml-auto">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => onOpenChange(false)}
+              >
+                Annuler
+              </Button>
+              <Button type="submit" disabled={!selectedActivityId || !time}>
+                <Check className="mr-2 h-4 w-4" />
+                {isEditMode ? "Enregistrer" : "Logger"}
+              </Button>
+            </div>
           </DialogFooter>
         </form>
       </DialogContent>

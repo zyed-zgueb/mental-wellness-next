@@ -3,13 +3,12 @@
 import { useState, useMemo, useCallback } from "react";
 import { format } from "date-fns";
 import { fr, enUS } from "date-fns/locale";
-import { Calendar as CalendarIcon } from "lucide-react";
+import { Calendar as CalendarIcon, Plus } from "lucide-react";
 import { useLocale } from "next-intl";
 import { toast } from "sonner";
 import { ActivityLogDialog } from "@/components/activities/activity-log-dialog";
-import { QuickPicksSection } from "@/components/activities/quick-picks-section";
+import { InteractiveTimeline } from "@/components/activities/interactive-timeline";
 import type { TimelineLog } from "@/components/activities/timeline-entry";
-import { TimelineView } from "@/components/activities/timeline-view";
 import { PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -32,6 +31,9 @@ export default function TrackActivitiesPageV2() {
   const [logs, setLogs] = useState<TimelineLog[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>();
+  const [defaultTime, setDefaultTime] = useState<string | undefined>();
+  const [defaultDuration, setDefaultDuration] = useState<number | undefined>();
+  const [editingLog, setEditingLog] = useState<TimelineLog | undefined>();
 
   // Get quick pick activities (user's favorites)
   const quickPickActivities = useMemo(() => {
@@ -56,20 +58,48 @@ export default function TrackActivitiesPageV2() {
     });
   }, [logs, selectedDate]);
 
-  // Open dialog for adding new activity
+  // Open dialog for adding new activity (floating button)
   const handleAddClick = useCallback(() => {
     setSelectedActivity(undefined);
+    setDefaultTime(undefined);
+    setDefaultDuration(undefined);
+    setEditingLog(undefined);
     setDialogOpen(true);
   }, []);
 
-  // Open dialog with preselected activity (from quick pick)
-  const handleQuickPickClick = useCallback((activity: Activity) => {
-    setSelectedActivity(activity);
+  // Handle time slot click (add activity at specific time)
+  const handleTimeSlotClick = useCallback((hour: number, minute: number) => {
+    const time = `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
+    setSelectedActivity(undefined);
+    setDefaultTime(time);
+    setDefaultDuration(undefined);
+    setEditingLog(undefined);
     setDialogOpen(true);
   }, []);
 
-  // Create new log
-  const handleCreateLog = useCallback(
+  // Handle time slot drag (add activity with duration)
+  const handleTimeSlotDrag = useCallback(
+    (startHour: number, startMinute: number, durationMinutes: number) => {
+      const time = `${String(startHour).padStart(2, "0")}:${String(startMinute).padStart(2, "0")}`;
+      setSelectedActivity(undefined);
+      setDefaultTime(time);
+      setDefaultDuration(durationMinutes);
+      setEditingLog(undefined);
+      setDialogOpen(true);
+    },
+    []
+  );
+
+  // Handle activity click (edit existing activity)
+  const handleActivityClick = useCallback((log: TimelineLog) => {
+    // For now, we'll implement simple inline editing via a dialog
+    // In future, could support inline editing
+    setEditingLog(log);
+    setDialogOpen(true);
+  }, []);
+
+  // Create or update log
+  const handleLog = useCallback(
     (logData: {
       activityId: string;
       timestamp: Date;
@@ -77,48 +107,44 @@ export default function TrackActivitiesPageV2() {
       intensity?: 1 | 2 | 3 | 4 | 5;
       note?: string;
     }) => {
-      const newLog: TimelineLog = {
-        id: `log-${Date.now()}-${Math.random()}`,
-        ...logData,
-      };
+      if (editingLog) {
+        // Update existing log
+        const updatedLog: TimelineLog = {
+          ...editingLog,
+          ...logData,
+        };
+        setLogs((prev) => prev.map((log) => (log.id === updatedLog.id ? updatedLog : log)));
+        toast.success("Activité mise à jour", { duration: 2000 });
+      } else {
+        // Create new log
+        const newLog: TimelineLog = {
+          id: `log-${Date.now()}-${Math.random()}`,
+          ...logData,
+        };
+        setLogs((prev) => [...prev, newLog]);
+        toast.success("Activité loggée!", {
+          description: `${mockAllActivities.find((a) => a.id === logData.activityId)?.name} à ${format(logData.timestamp, "HH:mm")}`,
+          duration: 2000,
+        });
+      }
 
-      setLogs((prev) => [...prev, newLog]);
-
-      toast.success("Activité loggée!", {
-        description: `${mockAllActivities.find((a) => a.id === logData.activityId)?.name} à ${format(logData.timestamp, "HH:mm")}`,
-        duration: 2000,
-      });
+      // Reset state
+      setEditingLog(undefined);
+      setDefaultTime(undefined);
+      setDefaultDuration(undefined);
     },
-    []
+    [editingLog]
   );
-
-  // Update existing log
-  const handleUpdateLog = useCallback((updatedLog: TimelineLog) => {
-    setLogs((prev) => prev.map((log) => (log.id === updatedLog.id ? updatedLog : log)));
-
-    toast.success("Activité mise à jour", {
-      duration: 2000,
-    });
-  }, []);
-
-  // Delete log
-  const handleDeleteLog = useCallback((id: string) => {
-    setLogs((prev) => prev.filter((log) => log.id !== id));
-
-    toast.success("Activité supprimée", {
-      duration: 2000,
-    });
-  }, []);
 
   return (
     <div className="container mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <PageHeader
         title="Suivi d'Activités & Habitudes"
-        description="Suivez vos activités quotidiennes avec une timeline flexible"
+        description="Cliquez sur la timeline pour ajouter une activité • Glissez pour définir une durée"
       />
 
-      {/* Date picker */}
-      <div className="mt-6 flex items-center gap-4">
+      {/* Header bar: Date picker + count */}
+      <div className="mt-6 flex items-center justify-between gap-4">
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="outline" className="justify-start text-left font-normal">
@@ -143,37 +169,41 @@ export default function TrackActivitiesPageV2() {
         </div>
       </div>
 
-      {/* Main layout: 2 columns on desktop, stacked on mobile */}
-      <div className="mt-6 grid gap-6 lg:grid-cols-[320px,1fr]">
-        {/* Left column: Quick Picks */}
-        <div className="order-1 lg:order-1">
-          <div className="lg:sticky lg:top-6">
-            <h2 className="mb-3 text-lg font-semibold">Quick Picks</h2>
-            <QuickPicksSection
-              activities={quickPickActivities}
-              onAddClick={handleAddClick}
-              onQuickPickClick={handleQuickPickClick}
-            />
-          </div>
-        </div>
-
-        {/* Right column: Timeline */}
-        <div className="order-2 lg:order-2">
-          <h2 className="mb-3 text-lg font-semibold">Timeline du jour</h2>
-          <TimelineView
+      {/* Full-width interactive timeline */}
+      <div className="mt-6 rounded-lg border bg-card">
+        <div className="overflow-x-auto">
+          <InteractiveTimeline
             logs={todaysLogs}
-            onUpdateLog={handleUpdateLog}
-            onDeleteLog={handleDeleteLog}
+            onTimeSlotClick={handleTimeSlotClick}
+            onTimeSlotDrag={handleTimeSlotDrag}
+            onActivityClick={handleActivityClick}
           />
         </div>
       </div>
 
-      {/* Activity log dialog */}
+      {/* Floating [+] button */}
+      <Button
+        size="lg"
+        className="fixed bottom-8 right-8 h-14 w-14 rounded-full shadow-lg hover:shadow-xl transition-shadow z-50"
+        onClick={handleAddClick}
+      >
+        <Plus className="h-6 w-6" />
+      </Button>
+
+      {/* Activity log dialog with quick picks as chips */}
       <ActivityLogDialog
         open={dialogOpen}
         onOpenChange={setDialogOpen}
+        quickPickActivities={quickPickActivities}
         {...(selectedActivity ? { preselectedActivity: selectedActivity } : {})}
-        onLog={handleCreateLog}
+        {...(defaultTime ? { defaultTime } : {})}
+        {...(defaultDuration ? { defaultDuration } : {})}
+        {...(editingLog ? { editingLog } : {})}
+        onLog={handleLog}
+        onDelete={(id) => {
+          setLogs((prev) => prev.filter((log) => log.id !== id));
+          toast.success("Activité supprimée", { duration: 2000 });
+        }}
       />
     </div>
   );
