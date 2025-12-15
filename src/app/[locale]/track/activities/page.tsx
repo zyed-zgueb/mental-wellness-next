@@ -3,322 +3,178 @@
 import { useState, useMemo, useCallback } from "react";
 import { format } from "date-fns";
 import { fr, enUS } from "date-fns/locale";
-import {
-  Calendar as CalendarIcon,
-  Pill,
-  Brain,
-  Dumbbell,
-  MessageCircle,
-  Moon,
-  Utensils,
-  Users,
-  Flame,
-  TrendingUp,
-  Check,
-} from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { useLocale } from "next-intl";
 import { toast } from "sonner";
+import { ActivityLogDialog } from "@/components/activities/activity-log-dialog";
+import { QuickPicksSection } from "@/components/activities/quick-picks-section";
+import type { TimelineLog } from "@/components/activities/timeline-entry";
+import { TimelineView } from "@/components/activities/timeline-view";
 import { PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Progress } from "@/components/ui/progress";
-import type { ActivityCategory } from "@/lib/mock-data";
-import { mockActivities, mockActivityLogs, mockHabits } from "@/lib/mock-data";
-import { cn } from "@/lib/utils";
+import {
+  mockAllActivities,
+  mockUserActivityPreferences,
+  type Activity,
+} from "@/lib/mock-data";
 
-const categoryIcons: Record<ActivityCategory, typeof Pill> = {
-  medication: Pill,
-  meditation: Brain,
-  exercise: Dumbbell,
-  therapy: MessageCircle,
-  sleep: Moon,
-  nutrition: Utensils,
-  social: Users,
-};
-
-const categoryColors: Record<ActivityCategory, string> = {
-  medication: "from-blue-500 to-cyan-500",
-  meditation: "from-purple-500 to-pink-500",
-  exercise: "from-green-500 to-emerald-500",
-  therapy: "from-orange-500 to-red-500",
-  sleep: "from-indigo-500 to-blue-500",
-  nutrition: "from-yellow-500 to-orange-500",
-  social: "from-pink-500 to-rose-500",
-};
-
-export default function TrackActivitiesPage() {
-  const t = useTranslations();
+export default function TrackActivitiesPageV2() {
   const locale = useLocale();
   const dateLocale = locale === "fr" ? fr : enUS;
 
   const [selectedDate, setSelectedDate] = useState<Date>(() => new Date());
-  const [selectedActivities, setSelectedActivities] = useState<Set<string>>(new Set());
-  const [isSaving, setIsSaving] = useState(false);
+  const [logs, setLogs] = useState<TimelineLog[]>([]);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>();
 
-  // Group activities by category
-  const activitiesByCategory = useMemo(() => {
-    const grouped: Record<ActivityCategory, typeof mockActivities> = {
-      medication: [],
-      meditation: [],
-      exercise: [],
-      therapy: [],
-      sleep: [],
-      nutrition: [],
-      social: [],
-    };
+  // Get quick pick activities (user's favorites)
+  const quickPickActivities = useMemo(() => {
+    const quickPickIds = mockUserActivityPreferences
+      .filter((pref) => pref.isQuickPick)
+      .sort((a, b) => a.sortOrder - b.sortOrder)
+      .map((pref) => pref.activityId);
 
-    mockActivities.forEach((activity) => {
-      grouped[activity.category].push(activity);
+    return quickPickIds
+      .map((id) => mockAllActivities.find((act) => act.id === id))
+      .filter((act): act is Activity => act !== undefined);
+  }, []);
+
+  // Filter logs for selected date
+  const todaysLogs = useMemo(() => {
+    return logs.filter((log) => {
+      const logDate = new Date(log.timestamp);
+      logDate.setHours(0, 0, 0, 0);
+      const selectedDateNormalized = new Date(selectedDate);
+      selectedDateNormalized.setHours(0, 0, 0, 0);
+      return logDate.getTime() === selectedDateNormalized.getTime();
     });
+  }, [logs, selectedDate]);
 
-    return grouped;
+  // Open dialog for adding new activity
+  const handleAddClick = useCallback(() => {
+    setSelectedActivity(undefined);
+    setDialogOpen(true);
   }, []);
 
-  // Get last 7 days of activity data
-  const recentActivity = useMemo(() => {
-    return mockActivityLogs.slice(-7).map((log) => ({
-      date: log.date,
-      count: log.activities.length,
-    }));
+  // Open dialog with preselected activity (from quick pick)
+  const handleQuickPickClick = useCallback((activity: Activity) => {
+    setSelectedActivity(activity);
+    setDialogOpen(true);
   }, []);
 
-  const handleActivityToggle = useCallback((activityId: string) => {
-    setSelectedActivities((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(activityId)) {
-        newSet.delete(activityId);
-      } else {
-        newSet.add(activityId);
-      }
-      return newSet;
-    });
-  }, []);
+  // Create new log
+  const handleCreateLog = useCallback(
+    (logData: {
+      activityId: string;
+      timestamp: Date;
+      duration?: number;
+      intensity?: 1 | 2 | 3 | 4 | 5;
+      note?: string;
+    }) => {
+      const newLog: TimelineLog = {
+        id: `log-${Date.now()}-${Math.random()}`,
+        ...logData,
+      };
 
-  const handleSubmit = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
-      setIsSaving(true);
+      setLogs((prev) => [...prev, newLog]);
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      toast.success(t("tracking.activities.success.title"), {
-        description: t("tracking.activities.success.message", {
-          count: selectedActivities.size,
-        }),
-        icon: <Check className="h-4 w-4 text-mood-excellent" />,
-        duration: 3000,
+      toast.success("Activité loggée!", {
+        description: `${mockAllActivities.find((a) => a.id === logData.activityId)?.name} à ${format(logData.timestamp, "HH:mm")}`,
+        duration: 2000,
       });
-
-      setIsSaving(false);
     },
-    [t, selectedActivities.size]
+    []
   );
 
-  const categories: ActivityCategory[] = [
-    "medication",
-    "meditation",
-    "exercise",
-    "therapy",
-    "sleep",
-    "nutrition",
-    "social",
-  ];
+  // Update existing log
+  const handleUpdateLog = useCallback((updatedLog: TimelineLog) => {
+    setLogs((prev) => prev.map((log) => (log.id === updatedLog.id ? updatedLog : log)));
+
+    toast.success("Activité mise à jour", {
+      duration: 2000,
+    });
+  }, []);
+
+  // Delete log
+  const handleDeleteLog = useCallback((id: string) => {
+    setLogs((prev) => prev.filter((log) => log.id !== id));
+
+    toast.success("Activité supprimée", {
+      duration: 2000,
+    });
+  }, []);
 
   return (
-    <div className="container mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <div className="container mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <PageHeader
-        title={t("tracking.activities.title")}
-        description={t("tracking.activities.description")}
+        title="Suivi d'Activités & Habitudes"
+        description="Suivez vos activités quotidiennes avec une timeline flexible"
       />
 
-      <div className="mt-6 space-y-6 sm:mt-8">
-        <div className="grid gap-6 lg:grid-cols-3">
-          {/* Activity Tracking Form */}
-          <div className="lg:col-span-2">
-            <Card>
-              <CardHeader>
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <CardTitle className="text-xl">
-                    {t("tracking.activities.form.title")}
-                  </CardTitle>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button variant="outline" className="justify-start text-left font-normal">
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {format(selectedDate, "PPP", { locale: dateLocale })}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="end">
-                      <Calendar
-                        mode="single"
-                        selected={selectedDate}
-                        onSelect={(date) => date && setSelectedDate(date)}
-                        disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
-                        initialFocus
-                        locale={dateLocale}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  {categories.map((category) => {
-                    const Icon = categoryIcons[category];
-                    const activities = activitiesByCategory[category];
+      {/* Date picker */}
+      <div className="mt-6 flex items-center gap-4">
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline" className="justify-start text-left font-normal">
+              <CalendarIcon className="mr-2 h-4 w-4" />
+              {format(selectedDate, "PPP", { locale: dateLocale })}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar
+              mode="single"
+              selected={selectedDate}
+              onSelect={(date) => date && setSelectedDate(date)}
+              disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+              initialFocus
+              locale={dateLocale}
+            />
+          </PopoverContent>
+        </Popover>
 
-                    if (activities.length === 0) return null;
-
-                    return (
-                      <div key={category} className="space-y-3">
-                        <div className="flex items-center gap-2">
-                          <div
-                            className={`flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br ${categoryColors[category]}`}
-                          >
-                            <Icon className="h-4 w-4 text-white" />
-                          </div>
-                          <h3 className="text-sm font-semibold">
-                            {t(`tracking.activities.categories.${category}`)}
-                          </h3>
-                        </div>
-                        <div className="grid gap-2 sm:grid-cols-2">
-                          {activities.map((activity) => (
-                            <div
-                              key={activity.id}
-                              className={cn(
-                                "flex items-center gap-3 rounded-lg border p-3 transition-all hover:bg-accent",
-                                selectedActivities.has(activity.id) &&
-                                  "border-primary bg-accent"
-                              )}
-                            >
-                              <Checkbox
-                                id={activity.id}
-                                checked={selectedActivities.has(activity.id)}
-                                onCheckedChange={() => handleActivityToggle(activity.id)}
-                              />
-                              <Label
-                                htmlFor={activity.id}
-                                className="flex-1 cursor-pointer text-sm"
-                              >
-                                {activity.name}
-                              </Label>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  })}
-
-                  <Button type="submit" size="lg" className="w-full" disabled={isSaving}>
-                    {isSaving ? (
-                      <>
-                        <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                        {t("tracking.activities.form.saving")}
-                      </>
-                    ) : (
-                      <>
-                        <Check className="mr-2 h-4 w-4" />
-                        {t("tracking.activities.form.save")}
-                      </>
-                    )}
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Habits & Stats */}
-          <div className="space-y-6">
-            {/* Habits Card */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-lg">
-                  <Flame className="h-5 w-5 text-orange-500" />
-                  {t("tracking.activities.habits.title")}
-                </CardTitle>
-                <CardDescription>{t("tracking.activities.habits.description")}</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {mockHabits.slice(0, 3).map((habit) => {
-                  const Icon = categoryIcons[habit.category];
-                  return (
-                    <div
-                      key={habit.id}
-                      className="space-y-2 rounded-lg border p-3"
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <Icon className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-sm font-medium">{habit.name}</span>
-                        </div>
-                        <div className="flex items-center gap-1 text-orange-500">
-                          <Flame className="h-4 w-4" />
-                          <span className="text-sm font-bold">{habit.currentStreak}</span>
-                        </div>
-                      </div>
-                      <div className="space-y-1">
-                        <div className="flex justify-between text-xs text-muted-foreground">
-                          <span>{t("tracking.activities.habits.progress")}</span>
-                          <span>
-                            {habit.currentStreak} / {habit.longestStreak} {t("common.days")}
-                          </span>
-                        </div>
-                        <Progress
-                          value={(habit.currentStreak / habit.longestStreak) * 100}
-                          className="h-2"
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
-              </CardContent>
-            </Card>
-
-            {/* Recent Activity Chart */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-lg">
-                  <TrendingUp className="h-5 w-5 text-green-500" />
-                  {t("tracking.activities.recentActivity.title")}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  {recentActivity.map((day, index) => (
-                    <div key={index} className="flex items-center gap-3">
-                      <span className="w-12 text-xs text-muted-foreground">
-                        {format(day.date, "EEE", { locale: dateLocale })}
-                      </span>
-                      <div className="flex-1">
-                        <div className="h-8 rounded-md bg-accent relative overflow-hidden">
-                          <div
-                            className="h-full bg-gradient-to-r from-green-500 to-emerald-500 transition-all"
-                            style={{
-                              width: `${(day.count / mockActivities.length) * 100}%`,
-                            }}
-                          />
-                        </div>
-                      </div>
-                      <span className="w-8 text-right text-sm font-medium">
-                        {day.count}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+        <div className="text-sm text-muted-foreground">
+          {todaysLogs.length} {todaysLogs.length === 1 ? "activité" : "activités"}
         </div>
       </div>
+
+      {/* Main layout: 2 columns on desktop, stacked on mobile */}
+      <div className="mt-6 grid gap-6 lg:grid-cols-[320px,1fr]">
+        {/* Left column: Quick Picks */}
+        <div className="order-1 lg:order-1">
+          <div className="lg:sticky lg:top-6">
+            <h2 className="mb-3 text-lg font-semibold">Quick Picks</h2>
+            <QuickPicksSection
+              activities={quickPickActivities}
+              onAddClick={handleAddClick}
+              onQuickPickClick={handleQuickPickClick}
+            />
+          </div>
+        </div>
+
+        {/* Right column: Timeline */}
+        <div className="order-2 lg:order-2">
+          <h2 className="mb-3 text-lg font-semibold">Timeline du jour</h2>
+          <TimelineView
+            logs={todaysLogs}
+            onUpdateLog={handleUpdateLog}
+            onDeleteLog={handleDeleteLog}
+          />
+        </div>
+      </div>
+
+      {/* Activity log dialog */}
+      <ActivityLogDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        {...(selectedActivity ? { preselectedActivity: selectedActivity } : {})}
+        onLog={handleCreateLog}
+      />
     </div>
   );
 }

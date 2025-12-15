@@ -32,22 +32,40 @@ export type ActivityCategory =
   | "nutrition"
   | "social";
 
+export type ActivitySource = "predefined" | "custom";
+
 export interface Activity {
   id: string;
   name: string;
   category: ActivityCategory;
   icon?: string;
+  source: ActivitySource;
+  userId?: string; // null for predefined, user ID for custom
+  isArchived?: boolean;
+  tags?: string[];
+}
+
+export interface UserActivityPreference {
+  id: string;
+  userId: string;
+  activityId: string;
+  isQuickPick: boolean; // Favorited for quick access
+  sortOrder: number; // Custom ordering
 }
 
 export interface ActivityLog {
   id: string;
   date: Date;
-  activities: string[]; // Array of activity IDs
+  activityId: string; // Single activity per log (for multiple/day support)
+  timestamp: Date; // Exact time
+  duration?: number; // In minutes
+  intensity?: 1 | 2 | 3 | 4 | 5; // Optional intensity
   note?: string;
 }
 
 export interface Habit {
   id: string;
+  activityId: string; // Link to activity
   name: string;
   category: ActivityCategory;
   targetFrequency: "daily" | "weekly";
@@ -332,87 +350,209 @@ export const mockSymptomData = generateSymptomData();
 // Mock activities - predefined list of common wellness activities
 export const mockActivities: Activity[] = [
   // Medication
-  { id: "act-med-1", name: "Prendre médicaments matin", category: "medication" },
-  { id: "act-med-2", name: "Prendre médicaments soir", category: "medication" },
+  { id: "act-med-1", name: "Prendre médicaments matin", category: "medication", source: "predefined" },
+  { id: "act-med-2", name: "Prendre médicaments soir", category: "medication", source: "predefined" },
 
   // Meditation
-  { id: "act-medit-1", name: "Méditation guidée", category: "meditation" },
-  { id: "act-medit-2", name: "Respiration profonde", category: "meditation" },
-  { id: "act-medit-3", name: "Pleine conscience", category: "meditation" },
+  { id: "act-medit-1", name: "Méditation guidée", category: "meditation", source: "predefined" },
+  { id: "act-medit-2", name: "Respiration profonde", category: "meditation", source: "predefined" },
+  { id: "act-medit-3", name: "Pleine conscience", category: "meditation", source: "predefined" },
 
   // Exercise
-  { id: "act-ex-1", name: "Marche 30 min", category: "exercise" },
-  { id: "act-ex-2", name: "Yoga", category: "exercise" },
-  { id: "act-ex-3", name: "Course à pied", category: "exercise" },
-  { id: "act-ex-4", name: "Étirements", category: "exercise" },
+  { id: "act-ex-1", name: "Marche 30 min", category: "exercise", source: "predefined" },
+  { id: "act-ex-2", name: "Yoga", category: "exercise", source: "predefined" },
+  { id: "act-ex-3", name: "Course à pied", category: "exercise", source: "predefined" },
+  { id: "act-ex-4", name: "Étirements", category: "exercise", source: "predefined" },
 
   // Therapy
-  { id: "act-ther-1", name: "Séance thérapie", category: "therapy" },
-  { id: "act-ther-2", name: "Journaling thérapeutique", category: "therapy" },
+  { id: "act-ther-1", name: "Séance thérapie", category: "therapy", source: "predefined" },
+  { id: "act-ther-2", name: "Journaling thérapeutique", category: "therapy", source: "predefined" },
 
   // Sleep
-  { id: "act-sleep-1", name: "8h de sommeil", category: "sleep" },
-  { id: "act-sleep-2", name: "Routine coucher", category: "sleep" },
-  { id: "act-sleep-3", name: "Sieste réparatrice", category: "sleep" },
+  { id: "act-sleep-1", name: "8h de sommeil", category: "sleep", source: "predefined" },
+  { id: "act-sleep-2", name: "Routine coucher", category: "sleep", source: "predefined" },
+  { id: "act-sleep-3", name: "Sieste réparatrice", category: "sleep", source: "predefined" },
 
   // Nutrition
-  { id: "act-nutr-1", name: "Petit-déjeuner équilibré", category: "nutrition" },
-  { id: "act-nutr-2", name: "Boire 2L d'eau", category: "nutrition" },
-  { id: "act-nutr-3", name: "Repas sains", category: "nutrition" },
+  { id: "act-nutr-1", name: "Petit-déjeuner équilibré", category: "nutrition", source: "predefined" },
+  { id: "act-nutr-2", name: "Boire 2L d'eau", category: "nutrition", source: "predefined" },
+  { id: "act-nutr-3", name: "Repas sains", category: "nutrition", source: "predefined" },
 
   // Social
-  { id: "act-soc-1", name: "Appeler un proche", category: "social" },
-  { id: "act-soc-2", name: "Sortie entre amis", category: "social" },
-  { id: "act-soc-3", name: "Activité sociale", category: "social" },
+  { id: "act-soc-1", name: "Appeler un proche", category: "social", source: "predefined" },
+  { id: "act-soc-2", name: "Sortie entre amis", category: "social", source: "predefined" },
+  { id: "act-soc-3", name: "Activité sociale", category: "social", source: "predefined" },
 ];
 
-// Generate activity logs for last 30 days
+// Mock custom activities (user-created)
+export const mockCustomActivities: Activity[] = [
+  {
+    id: "act-custom-1",
+    name: "Musculation / Gym",
+    category: "exercise",
+    source: "custom",
+    userId: "user-1",
+    tags: ["gym", "strength", "fitness"],
+    icon: "💪"
+  },
+  {
+    id: "act-custom-2",
+    name: "Lecture avant dormir",
+    category: "sleep",
+    source: "custom",
+    userId: "user-1",
+    tags: ["relaxation", "reading", "evening"],
+    icon: "📚"
+  },
+  {
+    id: "act-custom-3",
+    name: "Promenade avec le chien",
+    category: "exercise",
+    source: "custom",
+    userId: "user-1",
+    tags: ["outdoor", "dog", "walk"],
+    icon: "🐕"
+  },
+  {
+    id: "act-custom-4",
+    name: "Écouter musique relaxante",
+    category: "meditation",
+    source: "custom",
+    userId: "user-1",
+    tags: ["music", "relaxation", "calm"],
+    icon: "🎵"
+  },
+];
+
+// All activities combined (predefined + custom)
+export const mockAllActivities = [...mockActivities, ...mockCustomActivities];
+
+// Mock user activity preferences (quick picks / favorites)
+export const mockUserActivityPreferences: UserActivityPreference[] = [
+  { id: "pref-1", userId: "user-1", activityId: "act-medit-1", isQuickPick: true, sortOrder: 1 },
+  { id: "pref-2", userId: "user-1", activityId: "act-ex-1", isQuickPick: true, sortOrder: 2 },
+  { id: "pref-3", userId: "user-1", activityId: "act-custom-1", isQuickPick: true, sortOrder: 3 },
+  { id: "pref-4", userId: "user-1", activityId: "act-nutr-2", isQuickPick: true, sortOrder: 4 },
+  { id: "pref-5", userId: "user-1", activityId: "act-custom-3", isQuickPick: true, sortOrder: 5 },
+  { id: "pref-6", userId: "user-1", activityId: "act-sleep-2", isQuickPick: true, sortOrder: 6 },
+];
+
+// Generate activity logs for last 30 days (multiple logs per day)
 function generateActivityLogs(): ActivityLog[] {
   const logs: ActivityLog[] = [];
   const baseDate = new Date("2025-12-12");
 
-  // Predefined patterns of activity IDs for each day
-  const activityPatterns: string[][] = [
-    ["act-med-1", "act-medit-1", "act-ex-1", "act-sleep-1", "act-nutr-1"],
-    ["act-med-1", "act-med-2", "act-sleep-1", "act-nutr-1", "act-nutr-2"],
-    ["act-med-1", "act-ex-2", "act-medit-2", "act-nutr-3"],
-    ["act-med-1", "act-med-2", "act-ex-1", "act-sleep-1", "act-soc-1"],
-    ["act-med-1", "act-medit-1", "act-sleep-2", "act-nutr-1"],
-    ["act-med-1", "act-med-2", "act-ex-3", "act-nutr-2", "act-soc-2"],
-    ["act-ther-1", "act-med-1", "act-medit-3", "act-sleep-1"],
-    ["act-med-1", "act-ex-1", "act-nutr-1", "act-nutr-2"],
-    ["act-med-1", "act-med-2", "act-medit-1", "act-sleep-1", "act-ex-4"],
-    ["act-med-1", "act-sleep-1", "act-nutr-3", "act-soc-1"],
-    ["act-med-1", "act-med-2", "act-ex-2", "act-medit-2", "act-nutr-1"],
-    ["act-med-1", "act-sleep-2", "act-ex-1", "act-nutr-2"],
-    ["act-med-1", "act-med-2", "act-medit-1", "act-sleep-1", "act-soc-3"],
-    ["act-ther-2", "act-med-1", "act-ex-1", "act-nutr-1"],
-    ["act-med-1", "act-med-2", "act-sleep-1", "act-medit-3", "act-nutr-2"],
-    ["act-med-1", "act-ex-3", "act-nutr-1", "act-soc-1"],
-    ["act-med-1", "act-med-2", "act-medit-1", "act-sleep-2", "act-ex-4"],
-    ["act-med-1", "act-sleep-1", "act-nutr-3", "act-nutr-2"],
-    ["act-med-1", "act-med-2", "act-ex-2", "act-medit-2"],
-    ["act-med-1", "act-sleep-1", "act-soc-2", "act-nutr-1"],
-    ["act-ther-1", "act-med-1", "act-med-2", "act-ex-1", "act-sleep-1"],
-    ["act-med-1", "act-medit-1", "act-nutr-2", "act-ex-4"],
-    ["act-med-1", "act-med-2", "act-sleep-2", "act-nutr-1"],
-    ["act-med-1", "act-ex-1", "act-medit-3", "act-soc-1"],
-    ["act-med-1", "act-med-2", "act-sleep-1", "act-nutr-3", "act-nutr-2"],
-    ["act-med-1", "act-ex-2", "act-medit-1", "act-soc-3"],
-    ["act-med-1", "act-med-2", "act-sleep-1", "act-nutr-1", "act-ex-4"],
-    ["act-ther-2", "act-med-1", "act-medit-2", "act-sleep-2"],
-    ["act-med-1", "act-med-2", "act-ex-1", "act-nutr-2", "act-soc-1"],
-    ["act-med-1", "act-sleep-1", "act-medit-1", "act-nutr-1", "act-ex-3"],
+  // Predefined patterns of activity IDs for each day (with times)
+  const activityPatterns: { activityId: string; hour: number; minute: number; duration?: number; intensity?: 1 | 2 | 3 | 4 | 5 }[][] = [
+    [
+      { activityId: "act-med-1", hour: 8, minute: 0 },
+      { activityId: "act-medit-1", hour: 9, minute: 30, duration: 20 },
+      { activityId: "act-custom-1", hour: 18, minute: 0, duration: 60, intensity: 4 },
+      { activityId: "act-nutr-2", hour: 14, minute: 30 },
+    ],
+    [
+      { activityId: "act-med-1", hour: 8, minute: 0 },
+      { activityId: "act-med-2", hour: 20, minute: 0 },
+      { activityId: "act-ex-1", hour: 17, minute: 0, duration: 30 },
+      { activityId: "act-nutr-1", hour: 7, minute: 30 },
+    ],
+    [
+      { activityId: "act-med-1", hour: 8, minute: 0 },
+      { activityId: "act-custom-3", hour: 16, minute: 0, duration: 20 },
+      { activityId: "act-medit-2", hour: 21, minute: 0, duration: 15 },
+    ],
+    [
+      { activityId: "act-med-1", hour: 8, minute: 0 },
+      { activityId: "act-med-2", hour: 20, minute: 0 },
+      { activityId: "act-ex-1", hour: 7, minute: 0, duration: 30 },
+      { activityId: "act-soc-1", hour: 19, minute: 0 },
+    ],
+    [
+      { activityId: "act-med-1", hour: 8, minute: 0 },
+      { activityId: "act-medit-1", hour: 10, minute: 0, duration: 25 },
+      { activityId: "act-sleep-2", hour: 22, minute: 0 },
+    ],
+    [
+      { activityId: "act-med-1", hour: 8, minute: 0 },
+      { activityId: "act-custom-1", hour: 18, minute: 0, duration: 75, intensity: 5 },
+      { activityId: "act-nutr-2", hour: 15, minute: 0 },
+    ],
+    [
+      { activityId: "act-ther-1", hour: 14, minute: 0, duration: 60 },
+      { activityId: "act-med-1", hour: 8, minute: 0 },
+      { activityId: "act-medit-3", hour: 19, minute: 30, duration: 10 },
+    ],
+    [
+      { activityId: "act-med-1", hour: 8, minute: 0 },
+      { activityId: "act-custom-3", hour: 17, minute: 0, duration: 25 },
+      { activityId: "act-nutr-1", hour: 7, minute: 0 },
+    ],
+    [
+      { activityId: "act-med-1", hour: 8, minute: 0 },
+      { activityId: "act-med-2", hour: 20, minute: 0 },
+      { activityId: "act-medit-1", hour: 11, minute: 0, duration: 20 },
+      { activityId: "act-ex-4", hour: 16, minute: 0, duration: 15 },
+    ],
+    [
+      { activityId: "act-med-1", hour: 8, minute: 0 },
+      { activityId: "act-sleep-1", hour: 23, minute: 0 },
+      { activityId: "act-soc-1", hour: 18, minute: 0 },
+    ],
+    [
+      { activityId: "act-med-1", hour: 8, minute: 0 },
+      { activityId: "act-custom-1", hour: 18, minute: 30, duration: 60, intensity: 3 },
+      { activityId: "act-medit-2", hour: 21, minute: 0, duration: 15 },
+    ],
+    [
+      { activityId: "act-med-1", hour: 8, minute: 0 },
+      { activityId: "act-ex-1", hour: 7, minute: 30, duration: 30 },
+      { activityId: "act-nutr-2", hour: 14, minute: 0 },
+    ],
+    [
+      { activityId: "act-med-1", hour: 8, minute: 0 },
+      { activityId: "act-med-2", hour: 20, minute: 0 },
+      { activityId: "act-medit-1", hour: 9, minute: 0, duration: 20 },
+      { activityId: "act-soc-3", hour: 19, minute: 30 },
+    ],
+    [
+      { activityId: "act-ther-2", hour: 20, minute: 0, duration: 30 },
+      { activityId: "act-med-1", hour: 8, minute: 0 },
+      { activityId: "act-custom-3", hour: 16, minute: 30, duration: 20 },
+    ],
+    [
+      { activityId: "act-med-1", hour: 8, minute: 0 },
+      { activityId: "act-med-2", hour: 20, minute: 0 },
+      { activityId: "act-medit-3", hour: 21, minute: 30, duration: 10 },
+    ],
   ];
 
+  // Repeat patterns for 30 days
   for (let i = 29; i >= 0; i--) {
     const date = new Date(baseDate);
     date.setDate(date.getDate() - i);
 
-    logs.push({
-      id: `log-${29 - i}`,
-      date,
-      activities: activityPatterns[29 - i] || [],
+    const dayPattern = activityPatterns[i % activityPatterns.length];
+    let logId = 0;
+
+    dayPattern?.forEach((activity) => {
+      const timestamp = new Date(date);
+      timestamp.setHours(activity.hour, activity.minute, 0, 0);
+
+      const log: ActivityLog = {
+        id: `log-${29 - i}-${logId++}`,
+        date,
+        activityId: activity.activityId,
+        timestamp,
+      };
+
+      if (activity.duration !== undefined) {
+        log.duration = activity.duration;
+      }
+      if (activity.intensity !== undefined) {
+        log.intensity = activity.intensity;
+      }
+
+      logs.push(log);
     });
   }
 
@@ -425,6 +565,7 @@ export const mockActivityLogs = generateActivityLogs();
 export const mockHabits: Habit[] = [
   {
     id: "habit-1",
+    activityId: "act-medit-1",
     name: "Méditation quotidienne",
     category: "meditation",
     targetFrequency: "daily",
@@ -434,6 +575,7 @@ export const mockHabits: Habit[] = [
   },
   {
     id: "habit-2",
+    activityId: "act-ex-1",
     name: "Exercice physique",
     category: "exercise",
     targetFrequency: "daily",
@@ -443,6 +585,7 @@ export const mockHabits: Habit[] = [
   },
   {
     id: "habit-3",
+    activityId: "act-med-1",
     name: "Prendre médicaments",
     category: "medication",
     targetFrequency: "daily",
@@ -452,6 +595,7 @@ export const mockHabits: Habit[] = [
   },
   {
     id: "habit-4",
+    activityId: "act-nutr-2",
     name: "Boire 2L d'eau",
     category: "nutrition",
     targetFrequency: "daily",
@@ -461,6 +605,7 @@ export const mockHabits: Habit[] = [
   },
   {
     id: "habit-5",
+    activityId: "act-soc-1",
     name: "Contact social",
     category: "social",
     targetFrequency: "weekly",
