@@ -196,8 +196,8 @@
 
 ## Phase 4 : Visualisations & Analytics UI ⚪
 
-### 3.1 Page Analytics complète
-- [ ] Créer `/app/analytics/page.tsx`
+### 4.1 Page Analytics complète
+- [ ] Créer `/app/[locale]/analytics/page.tsx`
 - [ ] Onglets de visualisation (Tabs shadcn)
 - [ ] Graphiques avec recharts :
   - [ ] Ligne : Tendance humeur sur 30/90/365 jours
