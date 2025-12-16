@@ -1,4 +1,4 @@
-import { Smile, Activity, Dumbbell, ArrowRight } from "lucide-react";
+import { Smile, Activity, Dumbbell, ArrowRight, Layers } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
@@ -17,6 +17,14 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const trackingPages = [
+  {
+    id: "unified",
+    href: "/track/activities-unified",
+    icon: Layers,
+    gradient: "from-blue-500 via-yellow-500 to-red-500",
+    available: true,
+    badge: "NEW",
+  },
   {
     id: "mood",
     href: "/track/mood",
@@ -74,6 +82,11 @@ export default function TrackingPage() {
                   {!isAvailable && (
                     <span className="text-xs font-normal text-muted-foreground">
                       ({t("tracking.hub.comingSoon")})
+                    </span>
+                  )}
+                  {"badge" in page && page.badge && (
+                    <span className="rounded-full bg-primary px-2 py-0.5 text-xs font-semibold text-primary-foreground">
+                      {page.badge}
                     </span>
                   )}
                 </CardTitle>

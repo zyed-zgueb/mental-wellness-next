@@ -146,6 +146,10 @@
       "title": "Suivi quotidien",
       "description": "Choisissez ce que vous souhaitez suivre aujourd'hui",
       "pages": {
+        "unified": {
+          "title": "Timeline Unifiée",
+          "description": "Suivez activités, humeur et symptômes sur une même timeline interactive"
+        },
         "mood": {
           "title": "Suivi d'humeur",
           "description": "Enregistrez votre humeur et vos émotions quotidiennes"

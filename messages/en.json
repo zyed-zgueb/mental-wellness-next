@@ -146,6 +146,10 @@
       "title": "Daily Tracking",
       "description": "Choose what you want to track today",
       "pages": {
+        "unified": {
+          "title": "Unified Timeline",
+          "description": "Track activities, mood, and symptoms on an interactive timeline"
+        },
         "mood": {
           "title": "Mood Tracking",
           "description": "Record your daily mood and emotions"

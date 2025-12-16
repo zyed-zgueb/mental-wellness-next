@@ -48,7 +48,7 @@ export default function TrackMoodPage() {
   );
   const [startDate, setStartDate] = useState<Date | undefined>(() => new Date());
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
-  const [moodLevel, setMoodLevel] = useState<MoodLevel>(7);
+  const [moodLevel, setMoodLevel] = useState<MoodLevel>(4);
   const [selectedEmotions, setSelectedEmotions] = useState<EmotionType[]>([]);
   const [note, setNote] = useState("");
   const [isSaving, setIsSaving] = useState(false);
@@ -86,7 +86,7 @@ export default function TrackMoodPage() {
     // Reset form
     setSelectedEmotions([]);
     setNote("");
-    setMoodLevel(7);
+    setMoodLevel(4);
     setIsSaving(false);
   }, [t, isPeriodMode]);
 

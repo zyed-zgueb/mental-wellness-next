@@ -27,7 +27,7 @@ import {
 
 export default function DashboardPage() {
   const { data: session, isPending } = useSession();
-  const [currentMood, setCurrentMood] = useState<MoodLevel>(7);
+  const [currentMood, setCurrentMood] = useState<MoodLevel>(4);
   const t = useTranslations("dashboard");
   const tCommon = useTranslations("common");
   const locale = useLocale();

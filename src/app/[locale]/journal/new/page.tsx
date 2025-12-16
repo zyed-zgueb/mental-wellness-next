@@ -37,7 +37,7 @@ export default function NewJournalEntryPage() {
   const [selectedTime, setSelectedTime] = useState<string>(() =>
     format(new Date(), "HH:mm")
   );
-  const [moodLevel, setMoodLevel] = useState<MoodLevel>(7);
+  const [moodLevel, setMoodLevel] = useState<MoodLevel>(4);
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
   const [isSaving, setIsSaving] = useState(false);

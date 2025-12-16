@@ -1,4 +1,4 @@
-export type MoodLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+export type MoodLevel = 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5;
 
 export type EmotionType =
   | "joy"
@@ -237,7 +237,7 @@ export const mockJournalEntries: JournalEntry[] = [
     content:
       "Aujourd'hui, j'ai passé du temps à l'extérieur et ça m'a fait beaucoup de bien. Le soleil et l'air frais ont vraiment amélioré mon humeur. J'ai réussi à finir plusieurs tâches importantes au travail.",
     date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
-    mood: 8,
+    mood: 4,
     tags: ["travail", "nature", "productivité"],
   },
   {
@@ -246,7 +246,7 @@ export const mockJournalEntries: JournalEntry[] = [
     content:
       "J'ai pris le temps de méditer ce matin. Ça m'a aidé à commencer la journée avec plus de sérénité. J'ai aussi eu une bonne conversation avec un ami.",
     date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
-    mood: 7,
+    mood: 4,
     tags: ["méditation", "amis", "calme"],
   },
   {
@@ -255,7 +255,7 @@ export const mockJournalEntries: JournalEntry[] = [
     content:
       "Aujourd'hui a été challengeant. J'ai eu quelques moments d'anxiété, mais j'ai pu utiliser mes techniques de respiration pour les gérer. Je suis fier de moi pour avoir persévéré.",
     date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
-    mood: 6,
+    mood: 3,
     tags: ["anxiété", "croissance", "fierté"],
   },
   {
@@ -264,7 +264,7 @@ export const mockJournalEntries: JournalEntry[] = [
     content:
       "J'ai passé un weekend tranquille à la maison. J'ai lu, cuisiné et passé du temps de qualité avec ma famille. Ces moments simples sont précieux.",
     date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-    mood: 9,
+    mood: 5,
     tags: ["famille", "repos", "gratitude"],
   },
   {
@@ -273,7 +273,7 @@ export const mockJournalEntries: JournalEntry[] = [
     content:
       "J'ai commencé une nouvelle routine le matin : réveil à 6h30, méditation, petit-déjeuner sain et planification de la journée. Je me sens déjà plus organisé.",
     date: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
-    mood: 8,
+    mood: 4,
     tags: ["routine", "organisation", "santé"],
   },
 ];

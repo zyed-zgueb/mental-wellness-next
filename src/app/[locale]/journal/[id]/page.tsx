@@ -76,7 +76,7 @@ export default function JournalEntryPage({ params }: PageProps) {
     journalEntry?.date ? format(journalEntry.date, "HH:mm") : format(new Date(), "HH:mm")
   );
   const [moodLevel, setMoodLevel] = useState<MoodLevel>(
-    journalEntry?.mood || 7
+    journalEntry?.mood || 4
   );
   const [tags, setTags] = useState<string[]>(journalEntry?.tags || []);
   const [tagInput, setTagInput] = useState("");
